@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://Scripts/Singletons/Global.gd"
+Audio="*res://Scenes/Singletons/AudioHandler.tscn"
 
 [rendering]
 

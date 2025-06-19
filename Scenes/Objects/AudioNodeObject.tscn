@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fha2uetsq3n6"]
+
+[ext_resource type="Script" uid="uid://ouwl8eee8dse" path="res://Scripts/Objects/audio_node_object.gd" id="1_e8jmm"]
+
+[node name="AudioNodeObject" type="AudioStreamPlayer"]
+autoplay = true
+script = ExtResource("1_e8jmm")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

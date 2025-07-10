@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2rcrcsty67fj"]
+
+[ext_resource type="Script" uid="uid://d27op2dblikrk" path="res://Scripts/Objects/Platformer/Platforms/mystery.gd" id="1_a7py5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a7py5"]
+size = Vector2(119, 20)
+
+[node name="Mystery" type="Node2D"]
+script = ExtResource("1_a7py5")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_a7py5")

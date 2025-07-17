@@ -5,10 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a7py5"]
 size = Vector2(119, 20)
 
-[node name="Mystery" type="Node2D"]
+[node name="Mystery" type="StaticBody2D"]
 script = ExtResource("1_a7py5")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_a7py5")

@@ -1,14 +1,133 @@
-<<<<<<< Updated upstream
-[gd_scene load_steps=0 format=3 uid="uid://b77oael4rthjy"]
-=======
-[gd_scene load_steps=2 format=3 uid="uid://b77oael4rthjy"]
+[gd_scene load_steps=6 format=3 uid="uid://bggcj6k1dq1xk"]
 
 [ext_resource type="Script" uid="uid://ca5owgkvbmvbo" path="res://Scripts/Levels/Minigames/platformer.gd" id="1_nngu6"]
->>>>>>> Stashed changes
+[ext_resource type="Script" uid="uid://b2nwa3nm13tyy" path="res://Scripts/Levels/Minigames/camera_2d.gd" id="2_no06q"]
+[ext_resource type="PackedScene" uid="uid://b57hn2eqj0vgl" path="res://Scenes/Objects/Platformer/Platforms/platform.tscn" id="2_sb3c7"]
+[ext_resource type="PackedScene" uid="uid://do1s2yydekb60" path="res://Scenes/Objects/Platformer/Platforms/crumbling.tscn" id="3_2pwja"]
+[ext_resource type="PackedScene" uid="uid://b8ofgpw3k131m" path="res://Scenes/Objects/Platformer/player.tscn" id="3_d1y02"]
 
 [node name="Platformer" type="Node2D"]
 script = ExtResource("1_nngu6")
+platform_nodes = Array[PackedScene]([ExtResource("2_sb3c7"), ExtResource("3_2pwja")])
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player_1", "player_2")]
+zoom = Vector2(0.6, 0.6)
+script = ExtResource("2_no06q")
+player_1 = NodePath("../Players/Player")
+player_2 = NodePath("../Players/Player2")
 
 [node name="Players" type="Node2D" parent="."]
+
+[node name="Player" parent="Players" instance=ExtResource("3_d1y02")]
+position = Vector2(-345, 216)
+
+[node name="Player2" parent="Players" instance=ExtResource("3_d1y02")]
+position = Vector2(329, 225)
+player_1 = false
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Node2D2" parent="Platforms" instance=ExtResource("2_sb3c7")]
+position = Vector2(-300, 300)
+
+[node name="Node2D3" parent="Platforms" instance=ExtResource("2_sb3c7")]
+position = Vector2(-150, 150)
+
+[node name="Node2D" parent="Platforms" instance=ExtResource("2_sb3c7")]
+position = Vector2(300, 300)
+
+[node name="Node2D4" parent="Platforms" instance=ExtResource("2_sb3c7")]
+position = Vector2(150, 150)
+
+[node name="Node2D5" parent="Platforms" instance=ExtResource("2_sb3c7")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Player1Win" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.0823529, 0, 0.27451)
+
+[node name="Label" type="Label" parent="CanvasLayer/Player1Win"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.5
+offset_top = -49.5
+offset_right = 244.5
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 72
+text = "Player 1 Win!!!"
+
+[node name="Restart" type="Button" parent="CanvasLayer/Player1Win"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 71.0
+offset_right = 145.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Restart"
+
+[node name="Player2Win" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.0823529, 0, 0.27451)
+
+[node name="Label" type="Label" parent="CanvasLayer/Player2Win"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.5
+offset_top = -49.5
+offset_right = 244.5
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 72
+text = "Player 2 Win!!!"
+
+[node name="Restart" type="Button" parent="CanvasLayer/Player2Win"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = 71.0
+offset_right = 145.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Restart"
+
+[connection signal="die" from="Players/Player" to="." method="_on_player_1_die"]
+[connection signal="die" from="Players/Player2" to="." method="_on_player_2_die"]
+[connection signal="pressed" from="CanvasLayer/Player1Win/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Player2Win/Restart" to="." method="_on_restart_pressed"]

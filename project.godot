@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="DevAndDiceCommunityClubGame"
-run/main_scene="uid://b77oael4rthjy"
+run/main_scene="uid://bggcj6k1dq1xk"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,13 @@ config/icon="res://icon.svg"
 
 Global="*res://Scripts/Singletons/Global.gd"
 Audio="*res://Scenes/Singletons/AudioHandler.tscn"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [input]
 

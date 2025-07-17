@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://brtp70u5o70v4"]
+
+[ext_resource type="Shader" path="res://_Scripts/_Shaders/scroll.gdshader" id="1_nltep"]
+
+[resource]
+shader = ExtResource("1_nltep")
+shader_parameter/speed = 0.025

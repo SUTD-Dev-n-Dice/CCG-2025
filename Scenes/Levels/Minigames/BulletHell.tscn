@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgnaeqshw6qwl"]
+
+[ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="1_w3u3q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3u3q"]
+size = Vector2(1016, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy5ie"]
+size = Vector2(53, 680)
+
+[node name="BulletHell" type="Node2D"]
+
+[node name="upper_bg" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(552, 328)
+scale = Vector2(5.85937, 5.125)
+texture = ExtResource("1_w3u3q")
+
+[node name="lower_bg" type="Sprite2D" parent="."]
+position = Vector2(575.5, 328)
+scale = Vector2(8.94531, 5.125)
+texture = ExtResource("1_w3u3q")
+
+[node name="Boundary" type="Node2D" parent="."]
+
+[node name="top" type="Area2D" parent="Boundary"]
+position = Vector2(87, -13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/top"]
+position = Vector2(498, 0)
+shape = SubResource("RectangleShape2D_w3u3q")
+
+[node name="bottom" type="Area2D" parent="Boundary"]
+position = Vector2(87, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/bottom"]
+position = Vector2(498, 0)
+shape = SubResource("RectangleShape2D_w3u3q")
+
+[node name="left" type="Area2D" parent="Boundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/left"]
+position = Vector2(151, 323)
+shape = SubResource("RectangleShape2D_vy5ie")
+
+[node name="right" type="Area2D" parent="Boundary"]
+position = Vector2(802, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/right"]
+position = Vector2(151, 323)
+shape = SubResource("RectangleShape2D_vy5ie")

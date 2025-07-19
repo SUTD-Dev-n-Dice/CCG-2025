@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://bk0iaodxsy7rl"]
+[gd_scene load_steps=4 format=3 uid="uid://bk0iaodxsy7rl"]
 
-[node name="Player" type="Node2D"]
+[ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/player.gd" id="1_dfbp3"]
+[ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="2_al5dy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfbp3"]
+size = Vector2(64, 64)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_dfbp3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_al5dy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dfbp3")

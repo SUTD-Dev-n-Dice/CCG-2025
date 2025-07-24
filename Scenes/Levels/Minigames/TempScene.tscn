@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://n3j6oroavi1r"]
+
+[ext_resource type="PackedScene" uid="uid://bk0iaodxsy7rl" path="res://Scenes/Objects/BulletHell/player.tscn" id="1_ebfot"]
+[ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/player.gd" id="2_yi28i"]
+
+[node name="TempScene" type="Node2D"]
+
+[node name="Player2" parent="." instance=ExtResource("1_ebfot")]
+position = Vector2(652, 464)
+script = ExtResource("2_yi28i")
+left = &"left2"
+right = &"right2"
+up = &"up2"
+down = &"down2"
+jump = &","
+
+[node name="Player1" parent="." instance=ExtResource("1_ebfot")]
+position = Vector2(423, 258)
+script = ExtResource("2_yi28i")
+left = &"left1"
+right = &"right1"
+up = &"up1"
+down = &"down1"
+jump = &"x"

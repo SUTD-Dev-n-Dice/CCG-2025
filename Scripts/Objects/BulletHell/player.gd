@@ -45,4 +45,4 @@ func _physics_process(delta):
 		scale.y = scale.x
 		if (scale <= ORIGINAL_SCALE):
 			update_state(PlayerState.GROUNDED)
-		$Sprite2D.z_index = scale.x # TODO: find a way to render overlap
+		$Sprite2D.z_index = scale.x * 100

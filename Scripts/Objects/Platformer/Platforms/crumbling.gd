@@ -18,6 +18,7 @@ func Crumbling():
 	$AnimationPlayer.play("spawn")
 	await get_tree().create_timer(1.0).timeout
 	%CollisionShape2D.disabled = false
+	is_crumbling = false
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @export var player_1:bool = true
 
+## Adjustable Constants
 const base_speed:int = 300
 const buffer_time:float = 0.3
 const max_jump_duration:float = 0.2
@@ -12,9 +13,14 @@ const coyote_time:float = 0.3
 const jump_power:int = 650
 const gravity:int = 2400
 
+## Powerup Variables
+var jump_mult:float = 1.0
+
+## Movement Variables
 var dir: Vector2 = Vector2.ZERO
 var speed:float = 0
 
+## Jump Variables
 var jump_buffer:float = 0
 var jump_time:float = 0
 var jumping:bool = false
@@ -51,11 +57,7 @@ func _physics_process(delta: float) -> void:
 			jump_number += 1
 			
 	if jumping and jump_buffer > 0:
-		dir.y = - jump_power * (max_jump_duration - jump_time/jump_duration_fading)/max_jump_duration
-		jump_time += delta
-		if jump_time > max_jump_duration:
-			jumping = false
-			jump_buffer = 0
+		jump(delta)
 	else:
 		jump_time = 0
 	
@@ -72,5 +74,15 @@ func _physics_process(delta: float) -> void:
 		time_in_air += delta
 
 
+func jump(delta: float):
+	dir.y = - jump_mult * jump_power * (max_jump_duration - jump_time/jump_duration_fading)/max_jump_duration
+	jump_time += delta
+	if jump_time > max_jump_duration:
+		jumping = false
+		jump_buffer = 0
+
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	die.emit()
+
+func powerup(powerup:PowerResource):
+	powerup.effect(self)

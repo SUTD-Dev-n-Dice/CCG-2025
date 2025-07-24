@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://bggcj6k1dq1xk"]
+[gd_scene load_steps=8 format=3 uid="uid://bggcj6k1dq1xk"]
 
 [ext_resource type="Script" uid="uid://ca5owgkvbmvbo" path="res://Scripts/Levels/Minigames/platformer.gd" id="1_nngu6"]
 [ext_resource type="Script" uid="uid://b2nwa3nm13tyy" path="res://Scripts/Levels/Minigames/camera_2d.gd" id="2_no06q"]
 [ext_resource type="PackedScene" uid="uid://b57hn2eqj0vgl" path="res://Scenes/Objects/Platformer/Platforms/platform.tscn" id="2_sb3c7"]
 [ext_resource type="PackedScene" uid="uid://do1s2yydekb60" path="res://Scenes/Objects/Platformer/Platforms/crumbling.tscn" id="3_2pwja"]
 [ext_resource type="PackedScene" uid="uid://b8ofgpw3k131m" path="res://Scenes/Objects/Platformer/player.tscn" id="3_d1y02"]
+[ext_resource type="PackedScene" uid="uid://87dp1wpph747" path="res://Scenes/Objects/Platformer/Platforms/phasing.tscn" id="4_4vubk"]
+[ext_resource type="PackedScene" uid="uid://b2rcrcsty67fj" path="res://Scenes/Objects/Platformer/Platforms/mystery.tscn" id="5_8mlde"]
 
 [node name="Platformer" type="Node2D"]
 script = ExtResource("1_nngu6")
-platform_nodes = Array[PackedScene]([ExtResource("2_sb3c7"), ExtResource("3_2pwja")])
+platform_nodes = Array[PackedScene]([ExtResource("2_sb3c7"), ExtResource("5_8mlde"), ExtResource("3_2pwja"), ExtResource("4_4vubk")])
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player_1", "player_2")]
 zoom = Vector2(0.6, 0.6)
@@ -40,6 +42,8 @@ position = Vector2(300, 300)
 position = Vector2(150, 150)
 
 [node name="Node2D5" parent="Platforms" instance=ExtResource("2_sb3c7")]
+
+[node name="Powers" type="Node2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

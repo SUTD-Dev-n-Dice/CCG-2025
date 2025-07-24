@@ -17,7 +17,7 @@ func changeAnger(angerModifier : int) -> void:
 func bulletDamaged() -> void:
 	health -= 5
 	
-	# TOD0: handle if health reaches below threshold
+	# TODO: handle if health reaches below threshold
 
 func _on_collision_area_area_entered(area: Area2D) -> void:
 	if (area.is_in_group("Bullet")):

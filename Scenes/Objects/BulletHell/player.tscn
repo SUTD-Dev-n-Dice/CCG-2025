@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bk0iaodxsy7rl"]
 
-[ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/player.gd" id="1_dfbp3"]
+[ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/Player.gd" id="1_dfbp3"]
 [ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="2_al5dy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfbp3"]

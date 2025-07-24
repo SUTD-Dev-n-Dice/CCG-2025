@@ -1,4 +1,4 @@
-class_name Enemy extends Node2D
+class_name Enemy extends CharacterBody2D
 
 var angerLevel : int = 50		# anger intensity controls frequency of attacks (increase chance for double attack)
 var health : int = 100			# health of enemy vehicle
@@ -18,8 +18,10 @@ func bulletDamaged() -> void:
 	health -= 5
 	
 	# TODO: handle if health reaches below threshold
-
-func _on_collision_area_area_entered(area: Area2D) -> void:
-	if (area.is_in_group("Bullet")):
-		bulletDamaged()
 	
+func _physics_process(delta):
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider():
+			if collision.is_in_group("Bullet"):
+				bulletDamaged()		

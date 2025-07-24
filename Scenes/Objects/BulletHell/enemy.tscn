@@ -24,7 +24,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0dulj"]
 size = Vector2(107, 107)
 
-[node name="Enemy" type="Node2D" groups=["Enemy"]]
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_bcrhi")
 
@@ -32,9 +32,7 @@ script = ExtResource("1_bcrhi")
 modulate = Color(0.96483, 8.23998e-05, 0.746386, 1)
 sprite_frames = SubResource("SpriteFrames_2yyrt")
 
-[node name="CollisionArea" type="Area2D" parent="." groups=["Enemy"]]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0dulj")
 
 [node name="StateMachine" type="Node" parent="."]
@@ -61,5 +59,4 @@ script = ExtResource("8_y4f3c")
 [node name="Flee" type="Node" parent="StateMachine"]
 script = ExtResource("9_yg15j")
 
-[connection signal="area_entered" from="CollisionArea" to="." method="_on_collision_area_area_entered"]
 [connection signal="timeout" from="StateMachine/Idle/IdleTimer" to="StateMachine/Idle" method="_on_timer_timeout"]

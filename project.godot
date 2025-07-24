@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 Global="*res://Scripts/Singletons/Global.gd"
 Audio="*res://Scenes/Singletons/AudioHandler.tscn"
 
+[global_group]
+
+Enemy="A hostile enemy opposing player"
+Player="A user controlled entity"
+
 [input]
 
 left1={

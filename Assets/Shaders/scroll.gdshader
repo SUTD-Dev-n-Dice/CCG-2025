@@ -2,10 +2,10 @@
 
 shader_type canvas_item;
 
-// Uniforms
-uniform float speed = 0.025;
+// --- Uniforms --- //
+uniform vec2 speed = vec2(0.0, -1.0);
 
-// Functions
-void fragment () {
-	COLOR = texture(TEXTURE, vec2(UV.x + TIME * speed, UV.y));
+// --- Functions --- //
+void fragment() {
+	COLOR = texture(TEXTURE, mod(UV + TIME * speed, 1.0));
 }

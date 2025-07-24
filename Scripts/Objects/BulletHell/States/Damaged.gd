@@ -1,0 +1,11 @@
+extends EnemyState
+
+func enter(previous_state_path: String, data := {}) -> void:
+	print("Entered Damaged State")
+	pass
+	
+# TODO: play animation to recueve damage, run away if too low
+
+func physics_update(delta: float) -> void:
+	if Input.is_action_just_pressed("z"):
+		finished.emit(MOVING)

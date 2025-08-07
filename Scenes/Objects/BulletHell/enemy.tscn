@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://civi8lu2m0cbi"]
 
 [ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="1_0dulj"]
-[ext_resource type="Script" uid="uid://bawrywakaivgn" path="res://Scenes/Objects/BulletHell/Enemy.gd" id="1_bcrhi"]
+[ext_resource type="Script" uid="uid://bawrywakaivgn" path="res://Scripts/Objects/BulletHell/Enemy.gd" id="1_bcrhi"]
 [ext_resource type="Script" uid="uid://uxlno8ho6lvk" path="res://Scripts/Objects/BulletHell/EnemyFSM.gd" id="3_pla0o"]
 [ext_resource type="Script" uid="uid://bqchmh304luss" path="res://Scripts/Objects/BulletHell/States/Idle.gd" id="4_2yyrt"]
 [ext_resource type="Script" uid="uid://b0ak0ynp5uyxf" path="res://Scripts/Objects/BulletHell/States/Charge.gd" id="5_yg15j"]
@@ -58,5 +58,7 @@ script = ExtResource("8_y4f3c")
 
 [node name="Flee" type="Node" parent="StateMachine"]
 script = ExtResource("9_yg15j")
+
+[node name="BulletSpawner" type="Node2D" parent="."]
 
 [connection signal="timeout" from="StateMachine/Idle/IdleTimer" to="StateMachine/Idle" method="_on_timer_timeout"]

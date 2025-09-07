@@ -8,6 +8,8 @@ class_name StateMachine extends Node
 	return initial_state if initial_state != null else get_child(0)
 ).call()
 
+@onready var game_manager = get_node("/root/BulletHell")
+
 func _ready() -> void:
 	# Give every state a reference to the state machine.
 	for state_node: State in find_children("*", "State"):
@@ -23,11 +25,13 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	state.update(delta)
+	if not game_manager.getState():
+		state.update(delta)
 
 
 func _physics_process(delta: float) -> void:
-	state.physics_update(delta)
+	if not game_manager.getState():
+		state.physics_update(delta)
 
 
 func _transition_to_next_state(target_state_path: String, data: Dictionary = {}) -> void:

@@ -1,12 +1,15 @@
 extends EnemyState
 
+var players : Array[String] = ["1", "2"]
+
 func enter(previous_state_path: String, data := {}) -> void:
 	print("Entered Charge State")
-	pass
-
-# TODO: Function to move towards last player position player
+	get_parent().get_parent().set_target_position(players[randi() % 2])
 
 func physics_update(delta: float) -> void:
-	# temp
-	if Input.is_action_just_pressed("z"):
+	var collision = get_parent().get_parent().move_to_player() 
+	
+	if collision == 0:
+		finished.emit(IDLE)
+	elif collision == 1:
 		finished.emit(SHOOT)

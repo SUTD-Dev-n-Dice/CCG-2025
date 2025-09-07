@@ -11,6 +11,15 @@ enum PlayerState { GROUNDED, FALLING }
 @export_subgroup("Action")
 @export var jump: StringName
 
+@onready var game_manager = get_node("/root/BulletHell")
+
+var healthQuarts: float = 12.0
+var maxHealthQuarters: int = 12
+var canTakeDamage := true
+var damageCooldown := 0.5   # invulnerability timing in seconds
+signal health_changed(player: String, health: float)
+signal game_end
+
 const ORIGINAL_SCALE = Vector2(1, 1)
 const JUMP_SCALE = Vector2(1.5, 1.5)
 
@@ -31,14 +40,24 @@ func process_input():
 	var input_direction = Input.get_vector(left, right, up, down).normalized()
 	velocity = input_direction * 400
 	
+	# use name as the indicator for current player
+	if name == "Player1":
+		game_manager.setPlayer1Position(position)
+	elif name == "Player2":
+		game_manager.setPlayer2Position(position)
+	
 	# jump
 	if (state == PlayerState.GROUNDED and Input.is_action_just_pressed(jump)):
 		update_state(PlayerState.FALLING)
 
 func _process(delta):
-	process_input()
+	if not game_manager.getState():
+		process_input()
 
 func _physics_process(delta):
+	if game_manager.getState():
+		return
+	
 	move_and_slide()
 	if (state == PlayerState.FALLING):
 		scale.x -= delta
@@ -46,3 +65,28 @@ func _physics_process(delta):
 		if (scale <= ORIGINAL_SCALE):
 			update_state(PlayerState.GROUNDED)
 		$Sprite2D.z_index = scale.x * 100
+	
+	# check for damage events
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider is CharacterBody2D && collider.is_in_group("Enemy"):
+			velocity = Vector2.ZERO
+			take_damage()
+			return 0
+
+func take_damage():
+	if not canTakeDamage:
+		return
+	canTakeDamage = false
+	
+	healthQuarts -= 1.0
+	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
+	print("Player hit! Health now:", healthQuarts)
+	
+	if healthQuarts == 0.0:
+		emit_signal("game_end")
+	
+	# start cooldown timer
+	var t = get_tree().create_timer(damageCooldown)
+	t.timeout.connect(func(): canTakeDamage = true)

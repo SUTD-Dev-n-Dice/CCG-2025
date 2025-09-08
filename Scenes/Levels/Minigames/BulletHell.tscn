@@ -214,21 +214,27 @@ shape = SubResource("RectangleShape2D_vy5ie")
 [node name="Enemy" parent="." groups=["Enemy"] instance=ExtResource("2_vy5ie")]
 position = Vector2(548, 300)
 
-[node name="Player1" parent="." groups=["Player"] instance=ExtResource("5_4tn5h")]
+[node name="Player1" parent="." node_paths=PackedStringArray("other") groups=["Player"] instance=ExtResource("5_4tn5h")]
 position = Vector2(400, 500)
 left = &"left1"
 right = &"right1"
 up = &"up1"
 down = &"down1"
 jump = &"z"
+spike = &"x"
+wave = &"c"
+other = NodePath("../Player2")
 
-[node name="Player2" parent="." groups=["Player"] instance=ExtResource("5_4tn5h")]
+[node name="Player2" parent="." node_paths=PackedStringArray("other") groups=["Player"] instance=ExtResource("5_4tn5h")]
 position = Vector2(700, 500)
 left = &"left2"
 right = &"right2"
 up = &"up2"
 down = &"down2"
-jump = &"x"
+jump = &"slash"
+spike = &"."
+wave = &","
+other = NodePath("../Player1")
 
 [connection signal="button_down" from="GameUI/GameOver/Return" to="." method="_on_return_button_down"]
 [connection signal="button_down" from="GameUI/GameOver/Retry" to="." method="_on_retry_button_down"]

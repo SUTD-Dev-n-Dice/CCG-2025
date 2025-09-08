@@ -13,9 +13,8 @@ func physics_update(delta: float) -> void:
 
 func setup_timer() -> void:
 	timer = get_child(0)
-	print(timer.name)
 	timer.wait_time = time
 	timer.start()
 
 func _on_timer_timeout() -> void:
-	finished.emit(CHARGE)
+	finished.emit(SELECT)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://civi8lu2m0cbi"]
+[gd_scene load_steps=13 format=3 uid="uid://civi8lu2m0cbi"]
 
 [ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="1_0dulj"]
 [ext_resource type="Script" uid="uid://bawrywakaivgn" path="res://Scripts/Objects/BulletHell/Enemy.gd" id="1_bcrhi"]
 [ext_resource type="Script" uid="uid://uxlno8ho6lvk" path="res://Scripts/Objects/BulletHell/EnemyFSM.gd" id="3_pla0o"]
 [ext_resource type="Script" uid="uid://bqchmh304luss" path="res://Scripts/Objects/BulletHell/States/Idle.gd" id="4_2yyrt"]
+[ext_resource type="Script" uid="uid://bthn8qq3bbyi2" path="res://Scripts/Objects/BulletHell/States/Select.gd" id="5_emere"]
 [ext_resource type="Script" uid="uid://b0ak0ynp5uyxf" path="res://Scripts/Objects/BulletHell/States/Charge.gd" id="5_yg15j"]
 [ext_resource type="Script" uid="uid://d3pmtcf62qgx7" path="res://Scripts/Objects/BulletHell/States/Shoot.gd" id="6_emere"]
 [ext_resource type="Script" uid="uid://c50deu565gs2h" path="res://Scripts/Objects/BulletHell/States/Damaged.gd" id="7_jw720"]
@@ -43,6 +44,9 @@ script = ExtResource("4_2yyrt")
 
 [node name="IdleTimer" type="Timer" parent="StateMachine/Idle"]
 one_shot = true
+
+[node name="Select" type="Node" parent="StateMachine"]
+script = ExtResource("5_emere")
 
 [node name="Charge" type="Node" parent="StateMachine"]
 script = ExtResource("5_yg15j")

@@ -9,6 +9,8 @@ var player2: CharacterBody2D
 var heartsUI1: HBoxContainer
 var heartsUI2: HBoxContainer
 
+var gameOverUI: ColorRect
+
 # the boolean that controls whether the entire game is running
 var isEnd: bool = false
 
@@ -17,6 +19,7 @@ func _ready():
 	player2 = get_node("Player2")
 	heartsUI1 = get_node("GameUI/Player1UI/HBoxContainer")
 	heartsUI2 = get_node("GameUI/Player2UI/HBoxContainer")
+	gameOverUI = get_node("GameUI/GameOver")
 	
 	heartsUI1.init_ui(player1.maxHealthQuarters)
 	player1.health_changed.connect(heartsUI1.update_hearts)
@@ -40,3 +43,18 @@ func game_start():
 	
 func game_end():
 	isEnd = true
+	gameOverUI.visible = true
+	gameOverUI.get_child(0).set_text("You lost!")
+	
+func game_win():
+	isEnd = true
+	gameOverUI.visible = true
+	gameOverUI.get_child(0).set_text("You win!")
+
+func _on_return_button_down() -> void:
+	# TODO: Add function to go to the main menu
+	pass # Replace with function body.
+
+func _on_retry_button_down() -> void:
+	get_tree().reload_current_scene()
+	pass # Replace with function body.

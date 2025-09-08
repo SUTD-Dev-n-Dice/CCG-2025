@@ -9,7 +9,7 @@ func enter(previous_state_path: String, data := {}) -> void:
 func physics_update(delta: float) -> void:
 	var collision = get_parent().get_parent().move_to_player() 
 	
-	if collision == 0:
+	if collision == 0:  # if hit player, idle
 		finished.emit(IDLE)
-	elif collision == 1:
+	elif collision == 1: # if not, shoot towards player & increase anger (NOT COMPLETE)
 		finished.emit(SHOOT)

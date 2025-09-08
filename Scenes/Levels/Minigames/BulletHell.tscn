@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://civi8lu2m0cbi" path="res://Scenes/Objects/BulletHell/enemy.tscn" id="2_vy5ie"]
 [ext_resource type="Shader" uid="uid://b5p2g2vi7q5gp" path="res://Assets/Shaders/scroll.gdshader" id="2_xjujy"]
 [ext_resource type="Script" uid="uid://cn427p3oaqhu5" path="res://Scripts/Objects/BulletHell/BoundaryHandler.gd" id="4_dgxji"]
+[ext_resource type="Script" uid="uid://cgwpdpsqhrusf" path="res://Scripts/Objects/BulletHell/MainTimer.gd" id="4_j4etd"]
 [ext_resource type="PackedScene" uid="uid://bk0iaodxsy7rl" path="res://Scenes/Objects/BulletHell/player.tscn" id="5_4tn5h"]
-[ext_resource type="Script" uid="uid://ced6bs5qy7y2w" path="res://Scenes/Levels/Minigames/EnemySpawner.gd" id="6_ggmkk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dgxji"]
 shader = ExtResource("2_xjujy")
@@ -108,6 +108,63 @@ value = 4.0
 fill_mode = 5
 texture_progress = ExtResource("1_w3u3q")
 
+[node name="GameplayTimer" type="Label" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.5
+offset_top = 30.0
+offset_right = 20.5
+offset_bottom = 53.0
+grow_horizontal = 2
+text = "03 : 00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_j4etd")
+
+[node name="GameOver" type="ColorRect" parent="GameUI"]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 0.564706)
+
+[node name="Label" type="Label" parent="GameUI/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -11.5
+offset_right = 38.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "You lost..."
+
+[node name="Return" type="Button" parent="GameUI/GameOver"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 350.0
+offset_right = 561.0
+offset_bottom = 381.0
+text = "Return"
+
+[node name="Retry" type="Button" parent="GameUI/GameOver"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 350.0
+offset_right = 661.0
+offset_bottom = 381.0
+text = "Retry"
+
 [node name="upper_bg" type="Sprite2D" parent="."]
 z_index = -3
 material = SubResource("ShaderMaterial_dgxji")
@@ -154,11 +211,6 @@ shape = SubResource("RectangleShape2D_vy5ie")
 position = Vector2(-27, 325)
 shape = SubResource("RectangleShape2D_vy5ie")
 
-[node name="EnemySpawner" type="Node2D" parent="."]
-visible = false
-position = Vector2(0, -2)
-script = ExtResource("6_ggmkk")
-
 [node name="Enemy" parent="." groups=["Enemy"] instance=ExtResource("2_vy5ie")]
 position = Vector2(548, 300)
 
@@ -178,4 +230,6 @@ up = &"up2"
 down = &"down2"
 jump = &"x"
 
+[connection signal="button_down" from="GameUI/GameOver/Return" to="." method="_on_return_button_down"]
+[connection signal="button_down" from="GameUI/GameOver/Retry" to="." method="_on_retry_button_down"]
 [connection signal="area_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_left_area_entered"]

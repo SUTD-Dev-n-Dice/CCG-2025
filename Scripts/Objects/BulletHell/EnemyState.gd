@@ -1,6 +1,7 @@
 class_name EnemyState extends State
 
 const IDLE = "Idle"
+const SELECT = "Select"
 const CHARGE = "Charge"
 const SHOOT = "Shoot"
 const DAMAGED = "Damaged"

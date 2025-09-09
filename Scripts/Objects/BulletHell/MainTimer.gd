@@ -24,8 +24,6 @@ func _on_timer_timeout():
 	
 	var minutes = int(currentTime / 60)
 	var seconds = int(currentTime % 60)
-	
-	print(minutes, " : ", str(seconds).pad_zeros(2) )
 	set_text(str(str(minutes).pad_zeros(2), " : ", str(seconds).pad_zeros(2)))
 	
 	if currentTime <= 0:

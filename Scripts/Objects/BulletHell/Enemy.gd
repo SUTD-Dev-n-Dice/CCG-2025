@@ -5,9 +5,10 @@ var health : int = 100			# health of enemy vehicle
 var type : String			# type of vehicle, affects sprites later
 
 @onready var game_manager = get_node("/root/BulletHell")
+var bullet = preload("res://Scenes/Objects/BulletHell/bullet.tscn")
 
 var bulletDamage : int  = 5
-var target_position : Vector2
+var target_position : CharacterBody2D
 var speed: float = 500.0
 
 var stateMachine : StateMachine
@@ -30,7 +31,7 @@ func set_target_position(player : String) -> void:
 		target_position = game_manager.player2Pos
 	
 func move_to_player() -> int:	
-	var direction: Vector2 = (target_position - global_position).normalized()
+	var direction: Vector2 = (target_position.global_position - global_position).normalized()
 	velocity = direction * speed
 	move_and_slide()
 	
@@ -41,9 +42,27 @@ func move_to_player() -> int:
 		if collider is CharacterBody2D && collider.is_in_group("Player"):
 			velocity = Vector2.ZERO
 			return 0
-	
+
 	#Case 2: If it reaches target position, go back to idle
-	if (target_position.distance_to(position) < 5):
+	if (target_position.global_position.distance_to(position) < 5):
 		return 1
 	else:
 		return 2
+
+func spawn_bullet() -> void:
+	var _bullet = bullet.instantiate()
+
+	# set bullet movement variables (target location, etc.)
+	var movement = _bullet.get_node("Movement")
+	if movement:
+		movement.init(target_position)
+		movement.initial_speed = 5
+		movement.acceleration = 5
+		
+	# set bullet damage variables
+	var damage = _bullet.get_node("Damage")
+	if damage:
+		damage.atk = 1.0
+		
+	_bullet.position = position
+	get_tree().current_scene.add_child(_bullet)

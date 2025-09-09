@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name PlayerBulletHell
 
 #region Class Preloads
 const Player = preload("res://Scripts/Objects/BulletHell/Player.gd")
@@ -96,6 +97,13 @@ func _sprite_process_delta(delta: float):
 var running: bool:
 	get: return not game_manager.getState(); # getState returns isEnded
 var state: PlayerState = PlayerState.GROUNDED
+@export var health: int = 1000000
+
+func _ready():
+	if name == PlayerName.ONE:
+		game_manager.setPlayer1Position(self)
+	elif name == PlayerName.TWO:
+		game_manager.setPlayer2Position(self)
 
 func update_state(new_state: PlayerState):
 	state = new_state
@@ -109,12 +117,6 @@ func _process_input():
 	# movement
 	var input_direction = Input.get_vector(left, right, up, down).normalized()
 	velocity = input_direction * 400
-
-	# use name as the indicator for current player
-	if name == PlayerName.ONE:
-		game_manager.setPlayer1Position(position)
-	elif name == PlayerName.TWO:
-		game_manager.setPlayer2Position(position)
 
 	# jump
 	if Input.is_action_just_pressed(jump) and state == PlayerState.GROUNDED:
@@ -151,17 +153,21 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		if collider is CharacterBody2D && collider.is_in_group("Enemy"):
 			velocity = Vector2.ZERO
-			take_damage()
+			take_damage(1.0)
 			return 0
 
-func take_damage():
+func take_damage(dmg):
 	if not canTakeDamage:
 		return
-	canTakeDamage = false
 
+	if dmg == 0.0:
+		print("[DEBUG] No damage dealt")
+		return
+	
+	canTakeDamage = false
 	healthQuarts -= 1.0
 	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
-	print("Player hit! Health now:", healthQuarts)
+	print("[DEBUG] health: ", healthQuarts)
 
 	if healthQuarts == 0.0:
 		emit_signal("game_end")
@@ -169,3 +175,22 @@ func take_damage():
 	# start cooldown timer
 	var t = get_tree().create_timer(damageCooldown)
 	t.timeout.connect(func(): canTakeDamage = true)
+
+func proc_bullet_enter(bullet: Bullet):
+	var damage_source: DamageSource = bullet.get_node("Damage")
+	var dmg = damage_source.on_hit(self)
+	take_damage(dmg)
+
+func proc_bullet_leave(bullet: Bullet):
+	var damage_source: DamageSource = bullet.get_node("Damage")
+	damage_source.on_leave(self)
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	var other = area.get_parent()
+	if other is Bullet:
+		proc_bullet_enter(other)
+
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	var other = area.get_parent()
+	if other is Bullet:
+		proc_bullet_leave(other)

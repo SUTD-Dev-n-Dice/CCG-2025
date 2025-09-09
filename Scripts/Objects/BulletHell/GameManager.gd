@@ -1,8 +1,8 @@
 extends Node
 
 # players update this every frame, enemy only accesses when necessary
-@export var player1Pos : Vector2 = Vector2.ZERO
-@export var player2Pos : Vector2 = Vector2.ZERO
+@export var player1Pos : CharacterBody2D
+@export var player2Pos : CharacterBody2D
 
 var player1: CharacterBody2D
 var player2: CharacterBody2D
@@ -29,10 +29,10 @@ func _ready():
 	player2.health_changed.connect(heartsUI2.update_hearts)
 	player2.game_end.connect(game_end)
 
-func setPlayer1Position(pos: Vector2) -> void:
+func setPlayer1Position(pos: Node2D) -> void:
 	player1Pos = pos
 	
-func setPlayer2Position(pos: Vector2) -> void:
+func setPlayer2Position(pos: Node2D) -> void:
 	player2Pos = pos
 
 func getState() -> bool:

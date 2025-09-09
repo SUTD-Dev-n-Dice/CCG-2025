@@ -10,8 +10,8 @@ func physics_update(delta: float) -> void:
 func choose_attack() -> void:
 	var rand = randi_range(1,10) # can be changed to mess with probability / balance
 	
-	# shoots 70%, charge 30%
-	if rand <= 7:
+	# shoots 60%, charge 40%
+	if rand <= 6:
 		finished.emit(SHOOT)
 	else:
 		finished.emit(CHARGE)	

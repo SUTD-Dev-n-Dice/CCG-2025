@@ -25,12 +25,12 @@ func _process(delta: float):
 	if not is_continuous:
 		return null
 	
-	for player
-	
-	# Check if invincibility is over
-	if delta * 1000 > repeat_duration:
-		_contact_update_time[player] = now
-		return atk
+	for player in _contact_start_time.keys():
+		# Check if invincibility is over
+		if delta * 1000 > repeat_duration:
+			var now = Time.get_ticks_msec()
+			_contact_update_time[player] = now
+			return atk
 	
 	return null
 
@@ -45,8 +45,7 @@ func on_hit(player: PlayerBulletHell):
 		_contact_update_time[player] = now
 		player.take_damage(atk)
 		
-	player.take_damage(null)
-
+	player.take_damage(0.0)
 
 ## Reset player tracking.
 func on_leave(player: PlayerBulletHell):

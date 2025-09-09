@@ -27,6 +27,12 @@ const JUMP_SCALE = Vector2(1.5, 1.5)
 var state: PlayerState = PlayerState.GROUNDED
 @export var health: int = 1000000
 
+func _ready():
+	if name == "Player1":
+		game_manager.setPlayer1Position(self)
+	elif name == "Player2":
+		game_manager.setPlayer2Position(self)
+
 func update_state(new_state: PlayerState):
 	state = new_state
 	match state:
@@ -41,13 +47,7 @@ func process_input():
 	# movement
 	var input_direction = Input.get_vector(left, right, up, down).normalized()
 	velocity = input_direction * 400
-	
-	# use name as the indicator for current player
-	if name == "Player1":
-		game_manager.setPlayer1Position(position)
-	elif name == "Player2":
-		game_manager.setPlayer2Position(position)
-	
+		
 	# jump
 	if (state == PlayerState.GROUNDED and Input.is_action_just_pressed(jump)):
 		update_state(PlayerState.FALLING)
@@ -74,17 +74,21 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		if collider is CharacterBody2D && collider.is_in_group("Enemy"):
 			velocity = Vector2.ZERO
-			take_damage()
+			take_damage(1.0)
 			return 0
 
-func take_damage():
+func take_damage(dmg):
 	if not canTakeDamage:
 		return
-	canTakeDamage = false
+		
+	if dmg == 0.0:
+		print("[DEBUG] No damage dealt")
+		return
 	
+	canTakeDamage = false
 	healthQuarts -= 1.0
 	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
-	print("Player hit! Health now:", healthQuarts)
+	print("[DEBUG] health: ", healthQuarts)
 	
 	if healthQuarts == 0.0:
 		emit_signal("game_end")
@@ -97,24 +101,15 @@ func proc_bullet_enter(bullet: Bullet):
 	var damage_source: DamageSource = bullet.get_node("Damage")
 	var dmg = damage_source.on_hit(self)
 	take_damage(dmg)
-	
 
 func proc_bullet_leave(bullet: Bullet):
 	var damage_source: DamageSource = bullet.get_node("Damage")
 	damage_source.on_leave(self)
 
-func take_damage(dmg):
-	if dmg == null:
-		print("[DEBUG] No damage dealt")
-	else:
-		health -= dmg
-		print("[DEBUG] health: ", health)
-
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	var other = area.get_parent()
 	if other is Bullet:
 		proc_bullet_enter(other)
-
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	var other = area.get_parent()

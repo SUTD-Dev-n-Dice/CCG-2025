@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgnaeqshw6qwl"]
+[gd_scene load_steps=14 format=3 uid="uid://bgnaeqshw6qwl"]
 
 [ext_resource type="Script" uid="uid://db4snt56vq38t" path="res://Scripts/Objects/BulletHell/GameManager.gd" id="1_tijud"]
 [ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="1_w3u3q"]
@@ -23,8 +23,13 @@ size = Vector2(1211, 47)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vy5ie"]
 size = Vector2(53, 680)
 
-[node name="BulletHell" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_37tp8"]
+size = Vector2(1188, 20)
+
+[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("player1Pos", "player2Pos")]
 script = ExtResource("1_tijud")
+player1Pos = NodePath("Player1")
+player2Pos = NodePath("Player2")
 
 [node name="GameUI" type="Control" parent="."]
 layout_mode = 3
@@ -184,6 +189,8 @@ script = ExtResource("4_dgxji")
 
 [node name="road_walls" type="StaticBody2D" parent="Boundary"]
 position = Vector2(87, -13)
+collision_layer = 8
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/road_walls"]
 position = Vector2(491, -11)
@@ -202,14 +209,24 @@ position = Vector2(866, 337)
 shape = SubResource("RectangleShape2D_vy5ie")
 
 [node name="bullet_walls" type="Area2D" parent="Boundary"]
+collision_layer = 8
+collision_mask = 7
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundary/bullet_walls"]
-position = Vector2(1179, 326)
+position = Vector2(950, 326)
 shape = SubResource("RectangleShape2D_vy5ie")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/bullet_walls"]
-position = Vector2(-27, 325)
+position = Vector2(153, 318)
 shape = SubResource("RectangleShape2D_vy5ie")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundary/bullet_walls"]
+position = Vector2(581, -8)
+shape = SubResource("RectangleShape2D_37tp8")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundary/bullet_walls"]
+position = Vector2(573, 654)
+shape = SubResource("RectangleShape2D_37tp8")
 
 [node name="Enemy" parent="." groups=["Enemy"] instance=ExtResource("2_vy5ie")]
 position = Vector2(548, 300)
@@ -233,3 +250,4 @@ jump = &"x"
 [connection signal="button_down" from="GameUI/GameOver/Return" to="." method="_on_return_button_down"]
 [connection signal="button_down" from="GameUI/GameOver/Retry" to="." method="_on_retry_button_down"]
 [connection signal="area_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_left_area_entered"]
+[connection signal="body_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_bullet_walls_body_entered"]

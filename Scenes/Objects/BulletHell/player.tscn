@@ -1,12 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://bk0iaodxsy7rl"]
+[gd_scene load_steps=5 format=3 uid="uid://bk0iaodxsy7rl"]
 
-[ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/Player.gd" id="1_dfbp3"]
+[ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/player.gd" id="1_dfbp3"]
 [ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="2_al5dy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfbp3"]
 size = Vector2(64, 64)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al5dy"]
+size = Vector2(58, 58)
+
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 14
 script = ExtResource("1_dfbp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -16,3 +20,12 @@ texture = ExtResource("2_al5dy")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.9, 0.9)
 shape = SubResource("RectangleShape2D_dfbp3")
+
+[node name="Area2d" type="Area2D" parent="."]
+collision_mask = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2d"]
+shape = SubResource("RectangleShape2D_al5dy")
+
+[connection signal="area_entered" from="Area2d" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2d" to="." method="_on_area_2d_area_exited"]

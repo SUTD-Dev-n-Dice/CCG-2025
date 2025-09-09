@@ -24,6 +24,7 @@ Audio="*res://Scenes/Singletons/AudioHandler.tscn"
 
 Enemy="A hostile enemy opposing player"
 Player="A user controlled entity"
+Bullet="A projectile that deals damage"
 
 [input]
 

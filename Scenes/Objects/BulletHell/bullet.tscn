@@ -8,7 +8,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a25nj"]
 size = Vector2(10, 10)
 
-[node name="Bullet" type="RigidBody2D"]
+[node name="Bullet" type="RigidBody2D" groups=["Bullet"]]
+collision_layer = 4
+collision_mask = 11
 gravity_scale = 0.0
 script = ExtResource("1_u6p15")
 
@@ -17,8 +19,8 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_tc2gm")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 16
-collision_mask = 0
+collision_layer = 4
+collision_mask = 11
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -29,7 +31,9 @@ script = ExtResource("2_p8tjq")
 
 [node name="Damage" type="Node" parent="."]
 script = ExtResource("3_pxiut")
-atk = null
-iframe_duration = null
-is_continuous = null
-repeat_duration = null
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

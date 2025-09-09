@@ -5,8 +5,11 @@ var bullets : int
 
 var canShoot : bool = true
 
+var players : Array[String] = ["1", "2"]
+
 func enter(previous_state_path: String, data := {}) -> void:
 	anger = get_parent().get_parent().angerLevel
+	get_parent().get_parent().set_target_position(players[randi() % 2])
 	bullets = 5
 	print("Entered Shoot State")
 
@@ -23,7 +26,7 @@ func shoot() -> void:
 	canShoot = false
 	bullets -= 1
 	
-	print("Bang!") # temp line, spawn bullet here
+	get_parent().get_parent().spawn_bullet()
 	
 	# start cooldown timer
 	var t = get_tree().create_timer(0.5)

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name PlayerBulletHell
 
 enum PlayerState { GROUNDED, FALLING }
 
@@ -24,6 +25,7 @@ const ORIGINAL_SCALE = Vector2(1, 1)
 const JUMP_SCALE = Vector2(1.5, 1.5)
 
 var state: PlayerState = PlayerState.GROUNDED
+@export var health: int = 1000000
 
 func update_state(new_state: PlayerState):
 	state = new_state
@@ -90,3 +92,31 @@ func take_damage():
 	# start cooldown timer
 	var t = get_tree().create_timer(damageCooldown)
 	t.timeout.connect(func(): canTakeDamage = true)
+
+func proc_bullet_enter(bullet: Bullet):
+	var damage_source: DamageSource = bullet.get_node("Damage")
+	var dmg = damage_source.on_hit(self)
+	take_damage(dmg)
+	
+
+func proc_bullet_leave(bullet: Bullet):
+	var damage_source: DamageSource = bullet.get_node("Damage")
+	damage_source.on_leave(self)
+
+func take_damage(dmg):
+	if dmg == null:
+		print("[DEBUG] No damage dealt")
+	else:
+		health -= dmg
+		print("[DEBUG] health: ", health)
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	var other = area.get_parent()
+	if other is Bullet:
+		proc_bullet_enter(other)
+
+
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	var other = area.get_parent()
+	if other is Bullet:
+		proc_bullet_leave(other)

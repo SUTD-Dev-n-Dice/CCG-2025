@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bggcj6k1dq1xk"]
+[gd_scene load_steps=9 format=3 uid="uid://bggcj6k1dq1xk"]
 
 [ext_resource type="Script" uid="uid://ca5owgkvbmvbo" path="res://Scripts/Levels/Minigames/platformer.gd" id="1_nngu6"]
 [ext_resource type="Script" uid="uid://b2nwa3nm13tyy" path="res://Scripts/Levels/Minigames/camera_2d.gd" id="2_no06q"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b8ofgpw3k131m" path="res://Scenes/Objects/Platformer/player.tscn" id="3_d1y02"]
 [ext_resource type="PackedScene" uid="uid://87dp1wpph747" path="res://Scenes/Objects/Platformer/Platforms/phasing.tscn" id="4_4vubk"]
 [ext_resource type="PackedScene" uid="uid://b2rcrcsty67fj" path="res://Scenes/Objects/Platformer/Platforms/mystery.tscn" id="5_8mlde"]
+[ext_resource type="Texture2D" uid="uid://ynwlgkwc2a3m" path="res://Scripts/Decor/Platformer/platformer.png" id="8_8mlde"]
 
 [node name="Platformer" type="Node2D"]
 script = ExtResource("1_nngu6")
@@ -130,6 +131,44 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 48
 text = "Restart"
+
+[node name="TEMPBG" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TEMPBG"]
+z_index = -1
+position = Vector2(12.5, -20)
+scale = Vector2(2, 2)
+texture = ExtResource("8_8mlde")
+
+[node name="Sprite2D2" type="Sprite2D" parent="TEMPBG"]
+z_index = -1
+position = Vector2(12.5, -1302)
+scale = Vector2(2, 2)
+texture = ExtResource("8_8mlde")
+
+[node name="Sprite2D3" type="Sprite2D" parent="TEMPBG"]
+z_index = -1
+position = Vector2(12.5, -2597)
+scale = Vector2(2, 2)
+texture = ExtResource("8_8mlde")
+
+[node name="Sprite2D4" type="Sprite2D" parent="TEMPBG"]
+z_index = -1
+position = Vector2(12.5, -3881)
+scale = Vector2(2, 2)
+texture = ExtResource("8_8mlde")
+
+[node name="Sprite2D5" type="Sprite2D" parent="TEMPBG"]
+z_index = -1
+position = Vector2(12.5, -5153)
+scale = Vector2(2, 2)
+texture = ExtResource("8_8mlde")
+
+[node name="Sprite2D6" type="Sprite2D" parent="TEMPBG"]
+z_index = -1
+position = Vector2(12.5, -6390)
+scale = Vector2(2, 2)
+texture = ExtResource("8_8mlde")
 
 [connection signal="die" from="Players/Player" to="." method="_on_player_1_die"]
 [connection signal="die" from="Players/Player2" to="." method="_on_player_2_die"]

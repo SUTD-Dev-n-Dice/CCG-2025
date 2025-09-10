@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bglclmjq2gkm6"]
 
-[ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="1_tc2gm"]
 [ext_resource type="Script" uid="uid://bf51nokwdk6cc" path="res://Scripts/Objects/BulletHell/Bullet.gd" id="1_u6p15"]
 [ext_resource type="Script" uid="uid://daelmcp61r5hf" path="res://Scripts/Objects/BulletHell/MoveToTargetLinearAcc.gd" id="2_p8tjq"]
+[ext_resource type="Texture2D" uid="uid://cepken1ef3qqh" path="res://Assets/Sprites/BulletHell/bullet.png" id="2_u6p15"]
 [ext_resource type="Script" uid="uid://byv7ed5ttqv6k" path="res://Scripts/Objects/BulletHell/DamageSource.gd" id="3_pxiut"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a25nj"]
@@ -15,8 +15,8 @@ gravity_scale = 0.0
 script = ExtResource("1_u6p15")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_tc2gm")
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("2_u6p15")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4

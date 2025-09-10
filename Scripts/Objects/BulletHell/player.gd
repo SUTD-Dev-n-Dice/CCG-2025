@@ -28,6 +28,9 @@ const PlayerName = {
 
 @export_group("References")
 @export var other: Player
+@export var profileSprite: TextureRect
+@export var normal_texture: Texture2D
+@export var hurt_texture: Texture2D
 
 @onready var game_manager: GameManager = get_node("/root/BulletHell")
 
@@ -79,6 +82,7 @@ var _sprite_scale: float:
 
 func _sprite_init_scale():
 	_sprite_original_scale = $Sprite2D.scale.x
+	profileSprite.texture = normal_texture
 
 func _sprite_update_state(state: PlayerState):
 	_sprite_scale = {
@@ -167,18 +171,27 @@ func take_damage(dmg):
 	healthQuarts -= 1.0
 	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
 	print("[DEBUG] health: ", healthQuarts)
+	
+	profileSprite.texture = hurt_texture
 
 	if healthQuarts == 0.0:
 		emit_signal("game_end")
 
 	# start cooldown timer
 	var t = get_tree().create_timer(damageCooldown)
-	t.timeout.connect(func(): canTakeDamage = true)
+	t.timeout.connect(reset_iframe)
+
+func reset_iframe():
+	canTakeDamage = true
+	profileSprite.texture = normal_texture
 
 func proc_bullet_enter(bullet: Bullet):
 	var damage_source: DamageSource = bullet.get_node("Damage")
 	var dmg = damage_source.on_hit(self)
 	take_damage(dmg)
+	
+	# NEW: Delete bullet
+	bullet.destroy_bullet()
 
 func proc_bullet_leave(bullet: Bullet):
 	var damage_source: DamageSource = bullet.get_node("Damage")

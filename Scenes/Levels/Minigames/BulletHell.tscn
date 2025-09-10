@@ -1,15 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://bgnaeqshw6qwl"]
+[gd_scene load_steps=24 format=3 uid="uid://bgnaeqshw6qwl"]
 
 [ext_resource type="Script" uid="uid://db4snt56vq38t" path="res://Scripts/Objects/BulletHell/GameManager.gd" id="1_tijud"]
-[ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="1_w3u3q"]
+[ext_resource type="Texture2D" uid="uid://beygk255vqalr" path="res://Assets/Sprites/BulletHell/Chonker_Red.png" id="2_1swcl"]
 [ext_resource type="Script" uid="uid://gkwh3j4xkc6d" path="res://Scripts/Objects/BulletHell/HealthBarManager.gd" id="2_37tp8"]
 [ext_resource type="PackedScene" uid="uid://civi8lu2m0cbi" path="res://Scenes/Objects/BulletHell/enemy.tscn" id="2_vy5ie"]
 [ext_resource type="Shader" uid="uid://b5p2g2vi7q5gp" path="res://Assets/Shaders/scroll.gdshader" id="2_xjujy"]
+[ext_resource type="Texture2D" uid="uid://dyushplj7frrd" path="res://Assets/Sprites/BulletHell/heart_red.png" id="4_5y24p"]
 [ext_resource type="Script" uid="uid://cn427p3oaqhu5" path="res://Scripts/Objects/BulletHell/BoundaryHandler.gd" id="4_dgxji"]
 [ext_resource type="Script" uid="uid://cgwpdpsqhrusf" path="res://Scripts/Objects/BulletHell/MainTimer.gd" id="4_j4etd"]
 [ext_resource type="PackedScene" uid="uid://bk0iaodxsy7rl" path="res://Scenes/Objects/BulletHell/player.tscn" id="5_4tn5h"]
+[ext_resource type="Texture2D" uid="uid://beo3t5ocaqvq8" path="res://Assets/Sprites/BulletHell/Truck.png" id="5_ffn50"]
+[ext_resource type="Texture2D" uid="uid://x11mr4bip1t" path="res://Assets/Sprites/BulletHell/heart_green.png" id="5_gwdul"]
+[ext_resource type="Texture2D" uid="uid://xcxuaanc08nc" path="res://Assets/Sprites/BulletHell/heart_purple.png" id="6_6bm5s"]
 [ext_resource type="Texture2D" uid="uid://i63c15dwd51o" path="res://Scripts/Decor/BulletHell/cyberpunk_foreground.png" id="6_j4etd"]
+[ext_resource type="Texture2D" uid="uid://ctmpmi6tikmip" path="res://Assets/Sprites/BulletHell/Chonker_Green.png" id="6_np1t5"]
 [ext_resource type="Texture2D" uid="uid://ratlgff6caue" path="res://Scripts/Decor/BulletHell/cyberpunk_baseground.png" id="7_akbj6"]
+[ext_resource type="Texture2D" uid="uid://g6823h3vpsch" path="res://Assets/Sprites/BulletHell/Chonker_Green_BEHIND.png" id="15_6bm5s"]
+[ext_resource type="Texture2D" uid="uid://co02s2gi3orf2" path="res://Assets/Sprites/BulletHell/Chonker_Red_Hurt.png" id="16_np1t5"]
+[ext_resource type="Texture2D" uid="uid://uecbo2juql8b" path="res://Assets/Sprites/BulletHell/Chonker_Green_Hurt.png" id="17_adhd7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dgxji"]
 shader = ExtResource("2_xjujy")
@@ -47,11 +55,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Player1UI"]
+[node name="Art2" type="ColorRect" parent="GameUI/Player1UI"]
 layout_mode = 1
 offset_left = 15.0
 offset_top = 10.0
-offset_right = 407.0
+offset_right = 143.0
+offset_bottom = 138.0
+color = Color(0.211765, 0.239216, 0.321569, 1)
+
+[node name="Sprite" type="TextureRect" parent="GameUI/Player1UI/Art2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("2_1swcl")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Player1UI"]
+layout_mode = 1
+offset_left = 143.0
+offset_top = 10.0
+offset_right = 535.0
 offset_bottom = 138.0
 scale = Vector2(0.35, 0.35)
 script = ExtResource("2_37tp8")
@@ -61,21 +96,21 @@ layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("4_5y24p")
 
 [node name="heart2" type="TextureProgressBar" parent="GameUI/Player1UI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("4_5y24p")
 
 [node name="heart3" type="TextureProgressBar" parent="GameUI/Player1UI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("4_5y24p")
 
 [node name="Player2UI" type="Control" parent="GameUI"]
 layout_mode = 1
@@ -87,9 +122,9 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Player2UI"]
 layout_mode = 1
-offset_left = 990.0
+offset_left = 862.0
 offset_top = 10.0
-offset_right = 1382.0
+offset_right = 1254.0
 offset_bottom = 138.0
 scale = Vector2(0.35, 0.35)
 script = ExtResource("2_37tp8")
@@ -99,21 +134,52 @@ layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("5_gwdul")
 
 [node name="heart2" type="TextureProgressBar" parent="GameUI/Player2UI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("5_gwdul")
 
 [node name="heart3" type="TextureProgressBar" parent="GameUI/Player2UI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("5_gwdul")
+
+[node name="Art2" type="ColorRect" parent="GameUI/Player2UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 10.0
+offset_right = -15.0
+offset_bottom = 138.0
+grow_horizontal = 0
+color = Color(0.211765, 0.239216, 0.321569, 1)
+
+[node name="Sprite" type="TextureRect" parent="GameUI/Player2UI/Art2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("6_np1t5")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="EnemyUI" type="Control" parent="GameUI"]
 top_level = true
@@ -145,64 +211,87 @@ layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart2" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart3" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart4" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart5" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart6" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart7" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
 [node name="heart8" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
 layout_mode = 2
 max_value = 4.0
 value = 4.0
 fill_mode = 5
-texture_progress = ExtResource("1_w3u3q")
+texture_progress = ExtResource("6_6bm5s")
 
-[node name="EnemyArt" type="TextureRect" parent="GameUI/EnemyUI"]
-layout_mode = 0
+[node name="Art" type="ColorRect" parent="GameUI/EnemyUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 1.0
 offset_top = -111.0
 offset_right = 129.0
 offset_bottom = 17.0
-texture = ExtResource("1_w3u3q")
+grow_vertical = 0
+color = Color(0.211765, 0.239216, 0.321569, 1)
+
+[node name="Sprite" type="TextureRect" parent="GameUI/EnemyUI/Art"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("5_ffn50")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="Timer" type="ColorRect" parent="GameUI"]
 layout_mode = 1
@@ -331,7 +420,7 @@ shape = SubResource("RectangleShape2D_37tp8")
 [node name="Enemy" parent="." groups=["Enemy"] instance=ExtResource("2_vy5ie")]
 position = Vector2(548, 300)
 
-[node name="Player1" parent="." node_paths=PackedStringArray("other") groups=["Player"] instance=ExtResource("5_4tn5h")]
+[node name="Player1" parent="." node_paths=PackedStringArray("other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
 position = Vector2(400, 500)
 left = &"left1"
 right = &"right1"
@@ -341,8 +430,11 @@ jump = &"z"
 spike = &"x"
 wave = &"c"
 other = NodePath("../Player2")
+profileSprite = NodePath("../GameUI/Player1UI/Art2/Sprite")
+normal_texture = ExtResource("2_1swcl")
+hurt_texture = ExtResource("16_np1t5")
 
-[node name="Player2" parent="." node_paths=PackedStringArray("other") groups=["Player"] instance=ExtResource("5_4tn5h")]
+[node name="Player2" parent="." node_paths=PackedStringArray("other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
 position = Vector2(700, 500)
 left = &"left2"
 right = &"right2"
@@ -352,8 +444,16 @@ jump = &"slash"
 spike = &"."
 wave = &","
 other = NodePath("../Player1")
+profileSprite = NodePath("../GameUI/Player2UI/Art2/Sprite")
+normal_texture = ExtResource("6_np1t5")
+hurt_texture = ExtResource("17_adhd7")
+
+[node name="Sprite2D" parent="Player2" index="0"]
+texture = ExtResource("15_6bm5s")
 
 [connection signal="button_down" from="GameUI/GameOver/Return" to="." method="_on_return_button_down"]
 [connection signal="button_down" from="GameUI/GameOver/Retry" to="." method="_on_retry_button_down"]
 [connection signal="area_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_left_area_entered"]
 [connection signal="body_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_bullet_walls_body_entered"]
+
+[editable path="Player2"]

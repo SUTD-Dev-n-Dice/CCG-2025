@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bk0iaodxsy7rl"]
 
 [ext_resource type="Script" uid="uid://difeg63wm16fq" path="res://Scripts/Objects/BulletHell/Player.gd" id="1_dfbp3"]
-[ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="2_al5dy"]
+[ext_resource type="Texture2D" uid="uid://d2h5jnhwhvcih" path="res://Assets/Sprites/BulletHell/Chonker_Red_BEHIND.png" id="2_dfbp3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfbp3"]
 size = Vector2(64, 64)
@@ -14,8 +14,9 @@ collision_mask = 14
 script = ExtResource("1_dfbp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_al5dy")
+position = Vector2(0, 2)
+scale = Vector2(0.165, 0.165)
+texture = ExtResource("2_dfbp3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.9, 0.9)

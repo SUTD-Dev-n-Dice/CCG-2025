@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2rcrcsty67fj"]
+
+[ext_resource type="Script" uid="uid://d27op2dblikrk" path="res://Scripts/Objects/Platformer/Platforms/mystery.gd" id="1_a7py5"]
+[ext_resource type="Script" uid="uid://b1m1pgbqj6lo4" path="res://Scripts/Resources/Platformer/power.gd" id="2_ps43q"]
+[ext_resource type="Texture2D" uid="uid://dvg3baum031v0" path="res://icon.svg" id="2_w0q8c"]
+[ext_resource type="Script" uid="uid://cqswjimsgu54t" path="res://Scripts/Resources/Platformer/PowerUps/jump_boost.gd" id="3_a3wax"]
+
+[sub_resource type="Resource" id="Resource_ognvl"]
+script = ExtResource("3_a3wax")
+metadata/_custom_type_script = "uid://cqswjimsgu54t"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4dom"]
+size = Vector2(185, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ps43q"]
+size = Vector2(185, 3)
+
+[node name="Mystery" type="StaticBody2D"]
+script = ExtResource("1_a7py5")
+powers = Array[ExtResource("2_ps43q")]([SubResource("Resource_ognvl")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_g4dom")
+one_way_collision = true
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(7.62939e-06, 0.374995)
+scale = Vector2(1.4375, 0.287109)
+texture = ExtResource("2_w0q8c")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -18.5)
+shape = SubResource("RectangleShape2D_ps43q")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

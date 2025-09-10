@@ -55,7 +55,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if player == null or player.other == null:
 		_destroy()
-
+				
 	_update_polygon()
 	for body in $Area2D.get_overlapping_bodies():
 		if body is Enemy:

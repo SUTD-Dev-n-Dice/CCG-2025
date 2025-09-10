@@ -100,6 +100,8 @@ var state: PlayerState = PlayerState.GROUNDED
 @export var health: int = 1000000
 
 func _ready():
+	_sprite_init_scale()
+	
 	if name == PlayerName.ONE:
 		game_manager.setPlayer1Position(self)
 	elif name == PlayerName.TWO:
@@ -109,9 +111,6 @@ func update_state(new_state: PlayerState):
 	state = new_state
 	_sprite_update_state(new_state)
 #endregion
-
-func _ready():
-	_sprite_init_scale()
 
 func _process_input():
 	# movement

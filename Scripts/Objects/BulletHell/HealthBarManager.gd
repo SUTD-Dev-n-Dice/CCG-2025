@@ -1,10 +1,6 @@
 extends HBoxContainer
 
-@onready var heart_bars = [
-	$heart1,
-	$heart2,
-	$heart3
-]
+@onready var heart_bars = find_children("heart*", "TextureProgressBar")
 
 func init_ui(max_health_quarters: int):
 	for heart in heart_bars:

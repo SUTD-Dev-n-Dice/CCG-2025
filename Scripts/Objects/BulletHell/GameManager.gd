@@ -6,8 +6,10 @@ extends Node
 
 var player1: CharacterBody2D
 var player2: CharacterBody2D
+var enemy: CharacterBody2D
 var heartsUI1: HBoxContainer
 var heartsUI2: HBoxContainer
+var enemyHeartsUI: HBoxContainer
 
 var gameOverUI: ColorRect
 
@@ -21,6 +23,9 @@ func _ready():
 	heartsUI2 = get_node("GameUI/Player2UI/HBoxContainer")
 	gameOverUI = get_node("GameUI/GameOver")
 	
+	enemy = get_node("Enemy")
+	enemyHeartsUI = get_node("GameUI/EnemyUI/HBoxContainer")
+	
 	heartsUI1.init_ui(player1.maxHealthQuarters)
 	player1.health_changed.connect(heartsUI1.update_hearts)
 	player1.game_end.connect(game_end)
@@ -28,6 +33,10 @@ func _ready():
 	heartsUI2.init_ui(player2.maxHealthQuarters)
 	player2.health_changed.connect(heartsUI2.update_hearts)
 	player2.game_end.connect(game_end)
+	
+	enemyHeartsUI.init_ui(enemy.maxHealthQuarters)
+	enemy.health_changed.connect(enemyHeartsUI.update_hearts)
+	enemy.game_win.connect(game_win)
 
 func setPlayer1Position(pos: Node2D) -> void:
 	player1Pos = pos

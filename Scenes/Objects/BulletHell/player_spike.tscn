@@ -10,5 +10,6 @@ points = PackedVector2Array(0, 0, 0, 0)
 width = 5.0
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 14
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]

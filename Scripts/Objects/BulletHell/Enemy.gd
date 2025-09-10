@@ -1,8 +1,16 @@
 class_name Enemy extends CharacterBody2D
 
 var angerLevel : int = 50		# anger intensity controls frequency of attacks (increase chance for double attack)
-var health : int = 100			# health of enemy vehicle
 var type : String			# type of vehicle, affects sprites later
+
+var healthQuarts: float = 32.0
+var maxHealthQuarters: int = 32
+signal health_changed(enemy: String, health: float)
+signal game_win
+
+# Staggered damage protection from spike
+var canDamage: bool = true
+var damageCooldown := 0.5   # invulnerability timing in seconds
 
 @onready var game_manager = get_node("/root/BulletHell")
 var bullet = preload("res://Scenes/Objects/BulletHell/bullet.tscn")
@@ -20,9 +28,20 @@ func changeAnger(angerModifier : int) -> void:
 	angerLevel += angerModifier
 
 func bulletDamaged() -> void:
-	health -= 5
+	if not canDamage:
+		return
+	canDamage = false
+		
+	healthQuarts -= 1.0
+	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
+	print("[DEBUG] enemy health: ", healthQuarts)
+
+	if healthQuarts == 0.0:
+		emit_signal("game_win")
 	
-	# TODO: handle if health reaches below threshold
+	# start cooldown timer
+	var t = get_tree().create_timer(damageCooldown)
+	t.timeout.connect(func(): canDamage = true)
 	
 func set_target_position(player : String) -> void:
 	if player == "1":

@@ -82,8 +82,9 @@ func _physics_process(delta):
 	for body in area.get_overlapping_bodies():
 		if not _is_body_in_outline(body):
 			continue
-		if body is Enemy:
+		if body.is_in_group("Enemy"):
 			# we may want a generic take damage if not everything is bullet
+			print("[Debug] Enemy Detected")
 			body.bulletDamaged()
 		if body is Player:
-			body.take_damage()
+			body.take_damage(1.0)

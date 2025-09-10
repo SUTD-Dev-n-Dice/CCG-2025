@@ -1,0 +1,152 @@
+[gd_scene load_steps=13 format=3 uid="uid://dfoyaxcxo3mks"]
+
+[ext_resource type="Script" uid="uid://fkbc0dpvyqrc" path="res://Scripts/Levels/mainmenu.gd" id="1_v2vhv"]
+[ext_resource type="Shader" uid="uid://dwmq3bowamajt" path="res://Resources/Shaders/mainmenu.gdshader" id="1_wbmw1"]
+[ext_resource type="PackedScene" uid="uid://bggcj6k1dq1xk" path="res://Scenes/Levels/Minigames/Platformer.tscn" id="2_qyrli"]
+[ext_resource type="Texture2D" uid="uid://dkbph3iavs1yn" path="res://Assets/Sprites/MainMenuBackground.png" id="2_v2vhv"]
+[ext_resource type="Texture2D" uid="uid://dii2hkc8paf7l" path="res://Assets/Sprites/WIP_1.png" id="4_xc4ow"]
+[ext_resource type="Texture2D" uid="uid://c5smwo5uvcoba" path="res://Assets/Sprites/WIP_2.png" id="5_cakra"]
+[ext_resource type="FontFile" uid="uid://dm6ffv3g8i4j3" path="res://Assets/Fonts/test.ttf" id="6_cakra"]
+[ext_resource type="Texture2D" uid="uid://bok3rlqbk7x5c" path="res://Assets/Sprites/Pllatformer Screenshot.png" id="7_qmniu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0g7yi"]
+shader = ExtResource("1_wbmw1")
+shader_parameter/speed = 0.2
+
+[sub_resource type="Animation" id="Animation_qmniu"]
+resource_name = "loop"
+length = 8.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(30, 93), Vector2(30, 53), Vector2(30, 93)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Wip2:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0785398, -0.0785398]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Wip1:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0785398, -0.0785398]
+}
+
+[sub_resource type="Animation" id="Animation_qyrli"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(30, 73)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Wip2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Wip1:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0y15m"]
+_data = {
+&"RESET": SubResource("Animation_qyrli"),
+&"loop": SubResource("Animation_qmniu")
+}
+
+[node name="Mainmenu" type="Node2D"]
+script = ExtResource("1_v2vhv")
+platformer_scene = ExtResource("2_qyrli")
+bullethell_scene = ExtResource("2_qyrli")
+
+[node name="MainMenuBackground" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_0g7yi")
+texture = ExtResource("2_v2vhv")
+centered = false
+
+[node name="Wip1" type="Sprite2D" parent="."]
+position = Vector2(137, 562)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("4_xc4ow")
+
+[node name="Wip2" type="Sprite2D" parent="."]
+position = Vector2(1081, 514)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_cakra")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 30.0
+offset_top = 93.0
+offset_right = 1247.0
+offset_bottom = 518.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 9
+theme_override_fonts/font = ExtResource("6_cakra")
+theme_override_font_sizes/font_size = 96
+text = "Dev & Dice
+Community Club Game"
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0y15m")
+}
+autoplay = "loop"
+
+[node name="PllatformerScreenshot" type="Sprite2D" parent="."]
+position = Vector2(895, 538)
+scale = Vector2(0.420142, 0.480519)
+texture = ExtResource("7_qmniu")
+
+[node name="PllatformerScreenshot2" type="Sprite2D" parent="."]
+position = Vector2(389, 534)
+scale = Vector2(0.420142, 0.480519)
+texture = ExtResource("7_qmniu")

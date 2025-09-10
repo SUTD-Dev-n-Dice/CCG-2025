@@ -27,6 +27,8 @@ var jumping:bool = false
 var jump_number:int = 0
 var time_in_air:float = 0
 
+var can_move:bool = false
+
 signal die
 
 func _ready() -> void:
@@ -35,17 +37,21 @@ func _ready() -> void:
 	if !player_1:
 		$Sprite2D.modulate = Color(0,0,1,1)
 
+func go():
+	can_move = true
+
 func _physics_process(delta: float) -> void:
-	var jump_button:String = "up1"
-	if player_1:
-		dir.x = Input.get_axis("left1", "right1")
-	else:
-		dir.x = Input.get_axis("left2", "right2")
-		jump_button = "up2"
+	var jump_button:String = "c"
+	if can_move:
+		if player_1:
+			dir.x = Input.get_axis("left1", "right1")
+		else:
+			dir.x = Input.get_axis("left2", "right2")
+			jump_button = "."
 	
 	dir.x *= speed
 	
-	if Input.is_action_pressed(jump_button):
+	if Input.is_action_pressed(jump_button) and can_move:
 		jump_buffer += delta
 	else:
 		jump_buffer = 0

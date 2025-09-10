@@ -1,0 +1,71 @@
+[gd_scene load_steps=13 format=3 uid="uid://civi8lu2m0cbi"]
+
+[ext_resource type="Script" uid="uid://bawrywakaivgn" path="res://Scripts/Objects/BulletHell/Enemy.gd" id="1_bcrhi"]
+[ext_resource type="Texture2D" uid="uid://beo3t5ocaqvq8" path="res://Assets/Sprites/BulletHell/Truck.png" id="2_emere"]
+[ext_resource type="Script" uid="uid://uxlno8ho6lvk" path="res://Scripts/Objects/BulletHell/EnemyFSM.gd" id="3_pla0o"]
+[ext_resource type="Script" uid="uid://bqchmh304luss" path="res://Scripts/Objects/BulletHell/States/Idle.gd" id="4_2yyrt"]
+[ext_resource type="Script" uid="uid://bthn8qq3bbyi2" path="res://Scripts/Objects/BulletHell/States/Select.gd" id="5_emere"]
+[ext_resource type="Script" uid="uid://b0ak0ynp5uyxf" path="res://Scripts/Objects/BulletHell/States/Charge.gd" id="5_yg15j"]
+[ext_resource type="Script" uid="uid://d3pmtcf62qgx7" path="res://Scripts/Objects/BulletHell/States/Shoot.gd" id="6_emere"]
+[ext_resource type="Script" uid="uid://c50deu565gs2h" path="res://Scripts/Objects/BulletHell/States/Damaged.gd" id="7_jw720"]
+[ext_resource type="Script" uid="uid://b7fwg66o2ik1a" path="res://Scripts/Objects/BulletHell/States/Moving.gd" id="8_y4f3c"]
+[ext_resource type="Script" uid="uid://bqoa4d3d2tqhm" path="res://Scripts/Objects/BulletHell/States/Flee.gd" id="9_yg15j"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2yyrt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_emere")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0dulj"]
+size = Vector2(107, 107)
+
+[node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_bcrhi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.96483, 8.23998e-05, 0.746386, 1)
+scale = Vector2(0.105, 0.105)
+sprite_frames = SubResource("SpriteFrames_2yyrt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0dulj")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_pla0o")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_2yyrt")
+
+[node name="IdleTimer" type="Timer" parent="StateMachine/Idle"]
+one_shot = true
+
+[node name="Select" type="Node" parent="StateMachine"]
+script = ExtResource("5_emere")
+
+[node name="Charge" type="Node" parent="StateMachine"]
+script = ExtResource("5_yg15j")
+
+[node name="Shoot" type="Node" parent="StateMachine"]
+script = ExtResource("6_emere")
+
+[node name="Damaged" type="Node" parent="StateMachine"]
+script = ExtResource("7_jw720")
+
+[node name="Moving" type="Node" parent="StateMachine"]
+script = ExtResource("8_y4f3c")
+
+[node name="Flee" type="Node" parent="StateMachine"]
+script = ExtResource("9_yg15j")
+
+[node name="BulletSpawner" type="Node2D" parent="."]
+
+[connection signal="timeout" from="StateMachine/Idle/IdleTimer" to="StateMachine/Idle" method="_on_timer_timeout"]

@@ -1,0 +1,459 @@
+[gd_scene load_steps=24 format=3 uid="uid://bgnaeqshw6qwl"]
+
+[ext_resource type="Script" uid="uid://db4snt56vq38t" path="res://Scripts/Objects/BulletHell/GameManager.gd" id="1_tijud"]
+[ext_resource type="Texture2D" uid="uid://beygk255vqalr" path="res://Assets/Sprites/BulletHell/Chonker_Red.png" id="2_1swcl"]
+[ext_resource type="Script" uid="uid://gkwh3j4xkc6d" path="res://Scripts/Objects/BulletHell/HealthBarManager.gd" id="2_37tp8"]
+[ext_resource type="PackedScene" uid="uid://civi8lu2m0cbi" path="res://Scenes/Objects/BulletHell/enemy.tscn" id="2_vy5ie"]
+[ext_resource type="Shader" uid="uid://b5p2g2vi7q5gp" path="res://Assets/Shaders/scroll.gdshader" id="2_xjujy"]
+[ext_resource type="Texture2D" uid="uid://dyushplj7frrd" path="res://Assets/Sprites/BulletHell/heart_red.png" id="4_5y24p"]
+[ext_resource type="Script" uid="uid://cn427p3oaqhu5" path="res://Scripts/Objects/BulletHell/BoundaryHandler.gd" id="4_dgxji"]
+[ext_resource type="Script" uid="uid://cgwpdpsqhrusf" path="res://Scripts/Objects/BulletHell/MainTimer.gd" id="4_j4etd"]
+[ext_resource type="PackedScene" uid="uid://bk0iaodxsy7rl" path="res://Scenes/Objects/BulletHell/player.tscn" id="5_4tn5h"]
+[ext_resource type="Texture2D" uid="uid://beo3t5ocaqvq8" path="res://Assets/Sprites/BulletHell/Truck.png" id="5_ffn50"]
+[ext_resource type="Texture2D" uid="uid://x11mr4bip1t" path="res://Assets/Sprites/BulletHell/heart_green.png" id="5_gwdul"]
+[ext_resource type="Texture2D" uid="uid://xcxuaanc08nc" path="res://Assets/Sprites/BulletHell/heart_purple.png" id="6_6bm5s"]
+[ext_resource type="Texture2D" uid="uid://i63c15dwd51o" path="res://Scripts/Decor/BulletHell/cyberpunk_foreground.png" id="6_j4etd"]
+[ext_resource type="Texture2D" uid="uid://ctmpmi6tikmip" path="res://Assets/Sprites/BulletHell/Chonker_Green.png" id="6_np1t5"]
+[ext_resource type="Texture2D" uid="uid://ratlgff6caue" path="res://Scripts/Decor/BulletHell/cyberpunk_baseground.png" id="7_akbj6"]
+[ext_resource type="Texture2D" uid="uid://g6823h3vpsch" path="res://Assets/Sprites/BulletHell/Chonker_Green_BEHIND.png" id="15_6bm5s"]
+[ext_resource type="Texture2D" uid="uid://co02s2gi3orf2" path="res://Assets/Sprites/BulletHell/Chonker_Red_Hurt.png" id="16_np1t5"]
+[ext_resource type="Texture2D" uid="uid://uecbo2juql8b" path="res://Assets/Sprites/BulletHell/Chonker_Green_Hurt.png" id="17_adhd7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dgxji"]
+shader = ExtResource("2_xjujy")
+shader_parameter/speed = Vector2(0, -0.7)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xjujy"]
+shader = ExtResource("2_xjujy")
+shader_parameter/speed = Vector2(0, -0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3u3q"]
+size = Vector2(1211, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy5ie"]
+size = Vector2(53, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_37tp8"]
+size = Vector2(1188, 20)
+
+[node name="BulletHell" type="Node2D" node_paths=PackedStringArray("player1Pos", "player2Pos")]
+script = ExtResource("1_tijud")
+player1Pos = NodePath("Player1")
+player2Pos = NodePath("Player2")
+
+[node name="GameUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Player1UI" type="Control" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Art2" type="ColorRect" parent="GameUI/Player1UI"]
+layout_mode = 1
+offset_left = 15.0
+offset_top = 10.0
+offset_right = 143.0
+offset_bottom = 138.0
+color = Color(0.380392, 0.168627, 0.160784, 0.882353)
+
+[node name="Sprite" type="TextureRect" parent="GameUI/Player1UI/Art2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("2_1swcl")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Player1UI"]
+layout_mode = 1
+offset_left = 143.0
+offset_top = 10.0
+offset_right = 535.0
+offset_bottom = 138.0
+scale = Vector2(0.35, 0.35)
+script = ExtResource("2_37tp8")
+
+[node name="heart1" type="TextureProgressBar" parent="GameUI/Player1UI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("4_5y24p")
+
+[node name="heart2" type="TextureProgressBar" parent="GameUI/Player1UI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("4_5y24p")
+
+[node name="heart3" type="TextureProgressBar" parent="GameUI/Player1UI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("4_5y24p")
+
+[node name="Player2UI" type="Control" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/Player2UI"]
+layout_mode = 1
+offset_left = 862.0
+offset_top = 10.0
+offset_right = 1254.0
+offset_bottom = 138.0
+scale = Vector2(0.35, 0.35)
+script = ExtResource("2_37tp8")
+
+[node name="heart1" type="TextureProgressBar" parent="GameUI/Player2UI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("5_gwdul")
+
+[node name="heart2" type="TextureProgressBar" parent="GameUI/Player2UI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("5_gwdul")
+
+[node name="heart3" type="TextureProgressBar" parent="GameUI/Player2UI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("5_gwdul")
+
+[node name="Art2" type="ColorRect" parent="GameUI/Player2UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 10.0
+offset_right = -15.0
+offset_bottom = 138.0
+grow_horizontal = 0
+color = Color(0.0941176, 0.282353, 0.184314, 0.882353)
+
+[node name="Sprite" type="TextureRect" parent="GameUI/Player2UI/Art2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("6_np1t5")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="EnemyUI" type="Control" parent="GameUI"]
+top_level = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="GameUI/EnemyUI"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = -49.0
+offset_right = 515.0
+offset_bottom = 17.0
+color = Color(0.309804, 0.164706, 0.403922, 0.784314)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/EnemyUI"]
+layout_mode = 1
+offset_left = 136.0
+offset_top = -39.0
+offset_right = 528.0
+offset_bottom = 89.0
+scale = Vector2(0.35, 0.35)
+script = ExtResource("2_37tp8")
+
+[node name="heart1" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart2" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart3" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart4" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart5" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart6" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart7" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="heart8" type="TextureProgressBar" parent="GameUI/EnemyUI/HBoxContainer"]
+layout_mode = 2
+max_value = 4.0
+value = 4.0
+fill_mode = 5
+texture_progress = ExtResource("6_6bm5s")
+
+[node name="Art" type="ColorRect" parent="GameUI/EnemyUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -111.0
+offset_right = 129.0
+offset_bottom = 17.0
+grow_vertical = 0
+color = Color(0.309804, 0.164706, 0.403922, 0.784314)
+
+[node name="Sprite" type="TextureRect" parent="GameUI/EnemyUI/Art"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("5_ffn50")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Timer" type="ColorRect" parent="GameUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -55.0
+offset_right = 7.0
+offset_bottom = 32.0
+grow_horizontal = 2
+color = Color(0.211765, 0.239216, 0.321569, 1)
+
+[node name="GameplayTimer" type="Label" parent="GameUI/Timer"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = 5.0
+offset_right = 24.0
+offset_bottom = 28.0
+grow_horizontal = 2
+text = "03 : 00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_j4etd")
+
+[node name="GameOver" type="ColorRect" parent="GameUI"]
+visible = false
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.109804, 0.109804, 0.109804, 0.564706)
+
+[node name="Label" type="Label" parent="GameUI/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -11.5
+offset_right = 38.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "You lost..."
+
+[node name="Return" type="Button" parent="GameUI/GameOver"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 350.0
+offset_right = 561.0
+offset_bottom = 381.0
+text = "Return"
+
+[node name="Retry" type="Button" parent="GameUI/GameOver"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 350.0
+offset_right = 661.0
+offset_bottom = 381.0
+text = "Retry"
+
+[node name="upper_bg" type="Sprite2D" parent="."]
+z_index = -3
+material = SubResource("ShaderMaterial_dgxji")
+position = Vector2(552, 328)
+texture = ExtResource("6_j4etd")
+
+[node name="lower_bg" type="Sprite2D" parent="."]
+z_index = -5
+material = SubResource("ShaderMaterial_xjujy")
+position = Vector2(575.5, 328)
+texture = ExtResource("7_akbj6")
+
+[node name="Boundary" type="Node2D" parent="."]
+script = ExtResource("4_dgxji")
+
+[node name="road_walls" type="StaticBody2D" parent="Boundary"]
+position = Vector2(87, -13)
+collision_layer = 8
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/road_walls"]
+position = Vector2(491, -11)
+shape = SubResource("RectangleShape2D_w3u3q")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundary/road_walls"]
+position = Vector2(502, 685)
+shape = SubResource("RectangleShape2D_w3u3q")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundary/road_walls"]
+position = Vector2(64, 336)
+shape = SubResource("RectangleShape2D_vy5ie")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundary/road_walls"]
+position = Vector2(866, 337)
+shape = SubResource("RectangleShape2D_vy5ie")
+
+[node name="bullet_walls" type="Area2D" parent="Boundary"]
+collision_layer = 8
+collision_mask = 7
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundary/bullet_walls"]
+position = Vector2(950, 326)
+shape = SubResource("RectangleShape2D_vy5ie")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/bullet_walls"]
+position = Vector2(153, 318)
+shape = SubResource("RectangleShape2D_vy5ie")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundary/bullet_walls"]
+position = Vector2(581, -8)
+shape = SubResource("RectangleShape2D_37tp8")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundary/bullet_walls"]
+position = Vector2(573, 654)
+shape = SubResource("RectangleShape2D_37tp8")
+
+[node name="Enemy" parent="." groups=["Enemy"] instance=ExtResource("2_vy5ie")]
+position = Vector2(548, 300)
+
+[node name="Player1" parent="." node_paths=PackedStringArray("other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
+position = Vector2(400, 500)
+left = &"left1"
+right = &"right1"
+up = &"up1"
+down = &"down1"
+jump = &"z"
+spike = &"x"
+wave = &"c"
+other = NodePath("../Player2")
+profileSprite = NodePath("../GameUI/Player1UI/Art2/Sprite")
+normal_texture = ExtResource("2_1swcl")
+hurt_texture = ExtResource("16_np1t5")
+
+[node name="Player2" parent="." node_paths=PackedStringArray("other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
+position = Vector2(700, 500)
+left = &"left2"
+right = &"right2"
+up = &"up2"
+down = &"down2"
+jump = &"slash"
+spike = &"."
+wave = &","
+other = NodePath("../Player1")
+profileSprite = NodePath("../GameUI/Player2UI/Art2/Sprite")
+normal_texture = ExtResource("6_np1t5")
+hurt_texture = ExtResource("17_adhd7")
+
+[node name="Sprite2D" parent="Player2" index="0"]
+texture = ExtResource("15_6bm5s")
+
+[connection signal="button_down" from="GameUI/GameOver/Return" to="." method="_on_return_button_down"]
+[connection signal="button_down" from="GameUI/GameOver/Retry" to="." method="_on_retry_button_down"]
+[connection signal="area_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_left_area_entered"]
+[connection signal="body_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_bullet_walls_body_entered"]
+
+[editable path="Player2"]

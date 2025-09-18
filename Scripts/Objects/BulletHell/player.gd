@@ -71,6 +71,10 @@ class SharedState extends RefCounted:
 #endregion
 
 #region Sprite Internals
+var _sprite_flash_modifier: float = 0
+var _sprite_shader: ShaderMaterial:
+	get: return $Sprite2D.material
+
 var _sprite_original_scale: float
 var _sprite_scale: float:
 	get:
@@ -91,10 +95,17 @@ func _sprite_update_state(state: PlayerState):
 	}[state]
 
 func _sprite_process_delta(delta: float):
+	_sprite_flash_modifier = move_toward(_sprite_flash_modifier, 0,
+		delta * (1 / damageCooldown))
+	_sprite_shader.set_shader_parameter("flash_modifier", _sprite_flash_modifier)
+
 	if state == PlayerState.FALLING:
 		_sprite_scale -= delta
 		if _sprite_scale <= 1.0:
 			update_state(PlayerState.GROUNDED)
+
+func _sprite_flash():
+	_sprite_flash_modifier = 1
 #endregion
 
 #region State Internals
@@ -172,6 +183,7 @@ func take_damage(dmg):
 	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
 	print("[DEBUG] health: ", healthQuarts)
 	
+	_sprite_flash()
 	profileSprite.texture = hurt_texture
 
 	if healthQuarts == 0.0:

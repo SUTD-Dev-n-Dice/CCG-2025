@@ -173,6 +173,8 @@ func _physics_process(delta):
 func take_damage(dmg):
 	if not canTakeDamage:
 		return
+	if state != PlayerState.GROUNDED:
+		return
 
 	if dmg == 0.0:
 		print("[DEBUG] No damage dealt")

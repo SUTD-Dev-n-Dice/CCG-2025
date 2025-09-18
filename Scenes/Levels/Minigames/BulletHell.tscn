@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bgnaeqshw6qwl"]
+[gd_scene load_steps=25 format=3 uid="uid://bgnaeqshw6qwl"]
 
 [ext_resource type="Script" uid="uid://db4snt56vq38t" path="res://Scripts/Objects/BulletHell/GameManager.gd" id="1_tijud"]
 [ext_resource type="Texture2D" uid="uid://beygk255vqalr" path="res://Assets/Sprites/BulletHell/Chonker_Red.png" id="2_1swcl"]
@@ -17,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://ratlgff6caue" path="res://Scripts/Decor/BulletHell/cyberpunk_baseground.png" id="7_akbj6"]
 [ext_resource type="Texture2D" uid="uid://g6823h3vpsch" path="res://Assets/Sprites/BulletHell/Chonker_Green_BEHIND.png" id="15_6bm5s"]
 [ext_resource type="Texture2D" uid="uid://co02s2gi3orf2" path="res://Assets/Sprites/BulletHell/Chonker_Red_Hurt.png" id="16_np1t5"]
+[ext_resource type="Texture2D" uid="uid://d2h5jnhwhvcih" path="res://Assets/Sprites/BulletHell/Chonker_Red_BEHIND.png" id="16_sebrg"]
 [ext_resource type="Texture2D" uid="uid://uecbo2juql8b" path="res://Assets/Sprites/BulletHell/Chonker_Green_Hurt.png" id="17_adhd7"]
-[ext_resource type="Shader" uid="uid://do6xvc2jtbqjm" path="res://Resources/Shaders/flash.gdshader" id="18_xnsag"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dgxji"]
 shader = ExtResource("2_xjujy")
@@ -36,12 +36,6 @@ size = Vector2(53, 680)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_37tp8"]
 size = Vector2(1188, 20)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sebrg"]
-resource_local_to_scene = true
-shader = ExtResource("18_xnsag")
-shader_parameter/flash_color = Color(1, 0, 0, 1)
-shader_parameter/flash_modifier = 1.0
 
 [node name="BulletHell" type="Node2D" node_paths=PackedStringArray("player1Pos", "player2Pos")]
 script = ExtResource("1_tijud")
@@ -438,6 +432,7 @@ spike = &"x"
 wave = &"c"
 other = NodePath("../Player2")
 profileSprite = NodePath("../GameUI/Player1UI/Art2/Sprite")
+map_texture = ExtResource("16_sebrg")
 normal_texture = ExtResource("2_1swcl")
 hurt_texture = ExtResource("16_np1t5")
 
@@ -452,16 +447,11 @@ spike = &"."
 wave = &","
 other = NodePath("../Player1")
 profileSprite = NodePath("../GameUI/Player2UI/Art2/Sprite")
+map_texture = ExtResource("15_6bm5s")
 normal_texture = ExtResource("6_np1t5")
 hurt_texture = ExtResource("17_adhd7")
-
-[node name="Sprite2D" parent="Player2" index="0"]
-material = SubResource("ShaderMaterial_sebrg")
-texture = ExtResource("15_6bm5s")
 
 [connection signal="button_down" from="GameUI/GameOver/Return" to="." method="_on_return_button_down"]
 [connection signal="button_down" from="GameUI/GameOver/Retry" to="." method="_on_retry_button_down"]
 [connection signal="area_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_left_area_entered"]
 [connection signal="body_entered" from="Boundary/bullet_walls" to="Boundary" method="_on_bullet_walls_body_entered"]
-
-[editable path="Player2"]

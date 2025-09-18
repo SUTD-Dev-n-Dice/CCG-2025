@@ -29,6 +29,7 @@ const PlayerName = {
 @export_group("References")
 @export var other: Player
 @export var profileSprite: TextureRect
+@export var map_texture: Texture2D
 @export var normal_texture: Texture2D
 @export var hurt_texture: Texture2D
 
@@ -86,6 +87,7 @@ var _sprite_scale: float:
 
 func _sprite_init_scale():
 	_sprite_original_scale = $Sprite2D.scale.x
+	$Sprite2D.texture = map_texture
 	profileSprite.texture = normal_texture
 
 func _sprite_update_state(state: PlayerState):
@@ -112,7 +114,6 @@ func _sprite_flash():
 var running: bool:
 	get: return not game_manager.getState(); # getState returns isEnded
 var state: PlayerState = PlayerState.GROUNDED
-@export var health: int = 1000000
 
 func _ready():
 	_sprite_init_scale()

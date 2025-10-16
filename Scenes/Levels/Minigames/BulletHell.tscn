@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bgnaeqshw6qwl"]
+[gd_scene load_steps=26 format=3 uid="uid://bgnaeqshw6qwl"]
 
 [ext_resource type="Script" uid="uid://db4snt56vq38t" path="res://Scripts/Objects/BulletHell/GameManager.gd" id="1_tijud"]
 [ext_resource type="Texture2D" uid="uid://beygk255vqalr" path="res://Assets/Sprites/BulletHell/Chonker_Red.png" id="2_1swcl"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bk0iaodxsy7rl" path="res://Scenes/Objects/BulletHell/player.tscn" id="5_4tn5h"]
 [ext_resource type="Texture2D" uid="uid://beo3t5ocaqvq8" path="res://Assets/Sprites/BulletHell/Truck.png" id="5_ffn50"]
 [ext_resource type="Texture2D" uid="uid://x11mr4bip1t" path="res://Assets/Sprites/BulletHell/heart_green.png" id="5_gwdul"]
+[ext_resource type="PackedScene" uid="uid://c2ankfr6gkkds" path="res://Scenes/Objects/BulletHell/player_skill_ui.tscn" id="5_sebrg"]
 [ext_resource type="Texture2D" uid="uid://xcxuaanc08nc" path="res://Assets/Sprites/BulletHell/heart_purple.png" id="6_6bm5s"]
 [ext_resource type="Texture2D" uid="uid://i63c15dwd51o" path="res://Scripts/Decor/BulletHell/cyberpunk_foreground.png" id="6_j4etd"]
 [ext_resource type="Texture2D" uid="uid://ctmpmi6tikmip" path="res://Assets/Sprites/BulletHell/Chonker_Green.png" id="6_np1t5"]
@@ -113,6 +114,14 @@ value = 4.0
 fill_mode = 5
 texture_progress = ExtResource("4_5y24p")
 
+[node name="SkillUI" parent="GameUI/Player1UI" instance=ExtResource("5_sebrg")]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 152.0
+offset_right = 115.0
+offset_bottom = 472.0
+color = Color(0.380392, 0.168627, 0.160784, 1)
+
 [node name="Player2UI" type="Control" parent="GameUI"]
 layout_mode = 1
 anchors_preset = 15
@@ -181,6 +190,15 @@ pivot_offset = Vector2(64, 64)
 texture = ExtResource("6_np1t5")
 expand_mode = 3
 stretch_mode = 5
+
+[node name="SkillUI" parent="GameUI/Player2UI" instance=ExtResource("5_sebrg")]
+layout_mode = 2
+offset_left = 1038.0
+offset_top = 152.0
+offset_right = 1138.0
+offset_bottom = 460.0
+grow_horizontal = 0
+color = Color(0.0941176, 0.282353, 0.184314, 1)
 
 [node name="EnemyUI" type="Control" parent="GameUI"]
 top_level = true
@@ -421,7 +439,7 @@ shape = SubResource("RectangleShape2D_37tp8")
 [node name="Enemy" parent="." groups=["Enemy"] instance=ExtResource("2_vy5ie")]
 position = Vector2(548, 300)
 
-[node name="Player1" parent="." node_paths=PackedStringArray("other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
+[node name="Player1" parent="." node_paths=PackedStringArray("skill_ui", "other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
 position = Vector2(400, 500)
 left = &"left1"
 right = &"right1"
@@ -430,13 +448,14 @@ down = &"down1"
 jump = &"z"
 spike = &"x"
 wave = &"c"
+skill_ui = NodePath("../GameUI/Player1UI/SkillUI")
 other = NodePath("../Player2")
 profileSprite = NodePath("../GameUI/Player1UI/Art2/Sprite")
 map_texture = ExtResource("16_sebrg")
 normal_texture = ExtResource("2_1swcl")
 hurt_texture = ExtResource("16_np1t5")
 
-[node name="Player2" parent="." node_paths=PackedStringArray("other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
+[node name="Player2" parent="." node_paths=PackedStringArray("skill_ui", "other", "profileSprite") groups=["Player"] instance=ExtResource("5_4tn5h")]
 position = Vector2(700, 500)
 left = &"left2"
 right = &"right2"
@@ -445,6 +464,7 @@ down = &"down2"
 jump = &"slash"
 spike = &"."
 wave = &","
+skill_ui = NodePath("../GameUI/Player2UI/SkillUI")
 other = NodePath("../Player1")
 profileSprite = NodePath("../GameUI/Player2UI/Art2/Sprite")
 map_texture = ExtResource("15_6bm5s")

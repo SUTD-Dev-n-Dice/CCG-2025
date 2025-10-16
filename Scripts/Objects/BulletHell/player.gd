@@ -5,6 +5,7 @@ class_name PlayerBulletHell
 const Player = preload("res://Scripts/Objects/BulletHell/Player.gd")
 const PlayerSpike = preload("res://Scripts/Objects/BulletHell/PlayerSpike.gd")
 const PlayerShockwave = preload("res://Scripts/Objects/BulletHell/PlayerShockwave.gd")
+const PlayerSkillUI = preload("res://Scripts/Objects/BulletHell/PlayerSkillUI.gd")
 const GameManager = preload("res://Scripts/Objects/BulletHell/GameManager.gd")
 
 const PLAYER_SPIKE_SCENE = preload("res://Scenes/Objects/BulletHell/player_spike.tscn")
@@ -12,6 +13,7 @@ const PLAYER_SHOCKWAVE_SCENE = preload("res://Scenes/Objects/BulletHell/player_s
 #endregion
 
 enum PlayerState { GROUNDED, FALLING }
+enum PlayerSkill { JUMP, SPIKE, WAVE, TBC }
 const PlayerName = {
 	ONE = "Player1",
 	TWO = "Player2",
@@ -27,6 +29,7 @@ const PlayerName = {
 @export var wave: StringName
 
 @export_group("References")
+@export var skill_ui: PlayerSkillUI
 @export var other: Player
 @export var profileSprite: TextureRect
 @export var map_texture: Texture2D
@@ -42,6 +45,13 @@ var damageCooldown := 0.5   # invulnerability timing in seconds
 var shockwave: PlayerShockwave = null
 signal health_changed(player: String, health: float)
 signal game_end
+
+const skill_cooldowns: Dictionary[PlayerSkill, float] = {
+	PlayerSkill.JUMP: 0.5,
+	PlayerSkill.SPIKE: 2.0,
+	PlayerSkill.WAVE: 2.0,
+	PlayerSkill.TBC: 0.0,
+}
 
 #region Shared Internals
 var shared = SharedState.get_instance()
@@ -81,14 +91,19 @@ var _sprite_scale: float:
 	get:
 		return $Sprite2D.scale.x / _sprite_original_scale
 	set(new_scale):
+		var scaled = _sprite_original_scale * new_scale
+		$Sprite2D.scale.x = scaled
+		$Sprite2D.scale.y = scaled
 		$Sprite2D.z_index = new_scale * 100
-		$Sprite2D.scale.x = _sprite_original_scale * new_scale
-		$Sprite2D.scale.y = _sprite_original_scale * new_scale
 
 func _sprite_init_scale():
 	_sprite_original_scale = $Sprite2D.scale.x
 	$Sprite2D.texture = map_texture
 	profileSprite.texture = normal_texture
+
+func _sprite_reset_scale():
+	_sprite_update_state(PlayerState.GROUNDED)
+	$Sprite2D.z_index = 0
 
 func _sprite_update_state(state: PlayerState):
 	_sprite_scale = {
@@ -112,7 +127,11 @@ func _sprite_flash():
 
 #region State Internals
 var running: bool:
-	get: return not game_manager.getState(); # getState returns isEnded
+	get:
+		var active = not game_manager.getState() # getState returns isEnded
+		if not active:
+			_sprite_reset_scale()
+		return active
 var state: PlayerState = PlayerState.GROUNDED
 
 func _ready():
@@ -135,19 +154,26 @@ func _process_input():
 
 	# jump
 	if Input.is_action_just_pressed(jump) and state == PlayerState.GROUNDED:
-		update_state(PlayerState.FALLING)
+		if skill_ui.can_trigger(PlayerSkill.JUMP):
+			skill_ui.trigger(PlayerSkill.JUMP)
+			update_state(PlayerState.FALLING)
 
 	# spike
 	if Input.is_action_just_pressed(spike) and other != null:
-		var spike = shared.create_spike(self)
-		if spike:
-			game_manager.add_child(spike)
+		if skill_ui.can_trigger(PlayerSkill.SPIKE):
+			var spike = shared.create_spike(self)
+			if spike:
+				skill_ui.trigger(PlayerSkill.SPIKE)
+				other.skill_ui.trigger(PlayerSkill.SPIKE)
+				game_manager.add_child(spike)
 
 	# shockwave
 	if Input.is_action_just_pressed(wave) and shockwave == null:
-		shockwave = PLAYER_SHOCKWAVE_SCENE.instantiate()
-		shockwave.player = self
-		game_manager.add_child(shockwave)
+		if skill_ui.can_trigger(PlayerSkill.WAVE):
+			shockwave = PLAYER_SHOCKWAVE_SCENE.instantiate()
+			shockwave.player = self
+			skill_ui.trigger(PlayerSkill.WAVE)
+			game_manager.add_child(shockwave)
 
 func _process(delta):
 	if not running:
@@ -201,6 +227,8 @@ func reset_iframe():
 	profileSprite.texture = normal_texture
 
 func proc_bullet_enter(bullet: Bullet):
+	if state != PlayerState.GROUNDED:
+		return
 	var damage_source: DamageSource = bullet.get_node("Damage")
 	var dmg = damage_source.on_hit(self)
 	take_damage(dmg)

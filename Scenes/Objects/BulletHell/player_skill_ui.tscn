@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2ankfr6gkkds"]
+
+[ext_resource type="Script" uid="uid://d253b0lsnhr44" path="res://Scripts/Objects/BulletHell/PlayerSkillUI.gd" id="1_8fgpi"]
+[ext_resource type="PackedScene" uid="uid://db8xfcioiqgfi" path="res://Scenes/Objects/BulletHell/player_skill_control.tscn" id="1_c3dbo"]
+
+[node name="PlayerSkillUI" type="VBoxContainer"]
+offset_right = 100.0
+offset_bottom = 400.0
+theme_override_constants/separation = 10
+script = ExtResource("1_8fgpi")
+
+[node name="Jump" parent="." instance=ExtResource("1_c3dbo")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+label = "Jump"
+color = Color(0.380392, 0.168627, 0.160784, 1)
+
+[node name="Spike" parent="." instance=ExtResource("1_c3dbo")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+label = "Spike"
+
+[node name="Wave" parent="." instance=ExtResource("1_c3dbo")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+label = "Wave"
+
+[node name="TBC" parent="." instance=ExtResource("1_c3dbo")]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+label = "TBC"

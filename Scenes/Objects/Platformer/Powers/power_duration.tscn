@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://m10dolrwf27e"]
+
+[ext_resource type="Texture2D" uid="uid://dp6itkdn2g4gt" path="res://Assets/Sprites/Platformer/Jumpboost.png" id="1_otlcj"]
+[ext_resource type="Script" uid="uid://bm3kbkf74xghy" path="res://Scripts/Objects/Platformer/Powers/power_duration.gd" id="2_r6w3a"]
+
+[node name="PowerDuration" type="TextureProgressBar"]
+custom_minimum_size = Vector2(48, 48)
+size_flags_vertical = 4
+value = 100.0
+fill_mode = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("1_otlcj")
+script = ExtResource("2_r6w3a")

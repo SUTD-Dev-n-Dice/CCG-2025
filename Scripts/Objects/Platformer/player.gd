@@ -14,6 +14,7 @@ const jump_power:int = 650
 const gravity:int = 2400
 
 ## Powerup Variables
+var powerups:Array[PowerResource] = []
 var jump_mult:float = 1.0
 
 ## Movement Variables
@@ -30,6 +31,8 @@ var time_in_air:float = 0
 var can_move:bool = false
 
 signal die
+
+var power_duration_node = preload("res://Scenes/Objects/Platformer/Powers/power_duration.tscn")
 
 func _ready() -> void:
 	speed = base_speed
@@ -90,5 +93,13 @@ func jump(delta: float):
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	die.emit()
 
-func powerup(powerup:PowerResource):
-	powerup.effect(self)
+func powerup(power:PowerResource):
+	power.effect(self)
+	powerups.append(PowerResource)
+	
+	var pd:PlatformerPowerDuration = power_duration_node.instantiate()
+	$PowerupContainer.add_child(pd)
+	pd.start(power, self)
+
+func remove_powerup(power:PowerResource):
+	powerups.erase(power)

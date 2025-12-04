@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4c6bmg62n1w1"]
+
+[ext_resource type="Script" uid="uid://my2rvb6yawuu" path="res://mesh_instance_3d.gd" id="1_a202f"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4xowi"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4xowi"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22951, 0)
+mesh = SubResource("CapsuleMesh_4xowi")
+script = ExtResource("1_a202f")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="MeshInstance3D"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, -0.0775809)
+mesh = SubResource("PlaneMesh_4xowi")

@@ -20,18 +20,18 @@ config/icon="res://icon.svg"
 Global="*res://Scripts/Singletons/Global.gd"
 Audio="*res://Scenes/Singletons/AudioHandler.tscn"
 
-[global_group]
-
-Enemy="A hostile enemy opposing player"
-Player="A user controlled entity"
-Bullet="A projectile that deals damage"
-
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[global_group]
+
+Enemy="A hostile enemy opposing player"
+Player="A user controlled entity"
+Bullet="A projectile that deals damage"
 
 [input]
 

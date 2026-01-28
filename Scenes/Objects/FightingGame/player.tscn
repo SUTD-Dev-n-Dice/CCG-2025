@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgnooksccd2iq"]
+
+[ext_resource type="Script" uid="uid://c7chd56e53ydt" path="res://Scripts/Characters/FightingGame/player_1.gd" id="1_3onki"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_4flbx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i3pqv"]
+size = Vector3(0.5, 2, 0.5)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+floor_stop_on_slope = false
+floor_max_angle = 0.0872665
+script = ExtResource("1_3onki")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+mesh = SubResource("CapsuleMesh_onrkg")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("PrismMesh_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_i3pqv")
+
+[node name="backtimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="backlimit" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="dashtimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="airdashtimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://p0sh1y4yqww5"]
+
+[ext_resource type="Script" uid="uid://1npt6yirthwj" path="res://Scripts/Characters/FightingGame/player_2.gd" id="1_8s7y0"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wkcja"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_wkcja"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uk8bg"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wkcja"]
+
+[node name="player2" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_8s7y0")
+
+[node name="pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="pivot"]
+mesh = SubResource("CapsuleMesh_wkcja")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="pivot"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.00435996, 1, 0.00031662)
+mesh = SubResource("PrismMesh_wkcja")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_uk8bg")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 1.01213, 0)
+shape = SubResource("SphereShape3D_wkcja")
+
+[node name="backtimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="backlimit" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="dashtimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true

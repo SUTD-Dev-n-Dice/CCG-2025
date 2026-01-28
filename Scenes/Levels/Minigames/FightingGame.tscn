@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=3 uid="uid://cmf7fnse5uy2e"]
+
+[ext_resource type="Script" uid="uid://dll8aq506puy0" path="res://Scripts/Objects/FightingGame/fighting_game_manager.gd" id="1_d3q4r"]
+[ext_resource type="PackedScene" uid="uid://b7dasku71f0id" path="res://Scenes/UI/FightingGame/tutorial_layer.tscn" id="3_3o87h"]
+[ext_resource type="Script" uid="uid://dgfv1c7gtaer0" path="res://Scripts/TEMP_DEV/display_framerate.gd" id="3_rup0t"]
+[ext_resource type="PackedScene" uid="uid://dlce70ytmgyn4" path="res://Scenes/UI/FightingGame/cutscene_layer.tscn" id="4_54hdo"]
+[ext_resource type="PackedScene" uid="uid://bf3773p221frn" path="res://Scenes/UI/FightingGame/end_layer.tscn" id="5_yr4c6"]
+[ext_resource type="PackedScene" uid="uid://bloqlnciulm6e" path="res://Scenes/UI/FightingGame/round_layer.tscn" id="6_uq43p"]
+[ext_resource type="Script" uid="uid://buojfrkw7vd5e" path="res://Scripts/Objects/FightingGame/fighting_player_manager.gd" id="7_yr4c6"]
+[ext_resource type="PackedScene" uid="uid://bgnooksccd2iq" path="res://Scenes/Objects/FightingGame/player.tscn" id="8_yr4c6"]
+[ext_resource type="PackedScene" uid="uid://p0sh1y4yqww5" path="res://Scenes/Objects/FightingGame/player_2.tscn" id="9_uq43p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_54hdo"]
+size = Vector3(50, 2, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yr4c6"]
+size = Vector3(50, 2, 50)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yr4c6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uq43p"]
+
+[node name="FightingGame" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.27992, 9.17486)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("tutorial_canvas", "round_canvas", "pause_canvas", "finish_canvas")]
+script = ExtResource("1_d3q4r")
+tutorial_canvas = NodePath("TutorialCanvas")
+round_canvas = NodePath("RoundCanvas")
+pause_canvas = NodePath("CutsceneCanvas")
+finish_canvas = NodePath("EndCanvas")
+
+[node name="GameTimer" type="Timer" parent="GameManager"]
+wait_time = 90.0
+one_shot = true
+
+[node name="DebugCanvas" type="CanvasLayer" parent="GameManager"]
+
+[node name="TEMP_FPS_LABEL" type="Label" parent="GameManager/DebugCanvas"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 51.0
+offset_bottom = 33.0
+theme_override_colors/font_color = Color(0.996945, 6.23293e-06, 1.54018e-06, 1)
+text = "FPS: "
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_rup0t")
+
+[node name="CutsceneCanvas" parent="GameManager" instance=ExtResource("4_54hdo")]
+visible = false
+
+[node name="EndCanvas" parent="GameManager" instance=ExtResource("5_yr4c6")]
+visible = false
+
+[node name="RoundCanvas" parent="GameManager" instance=ExtResource("6_uq43p")]
+visible = false
+
+[node name="TutorialCanvas" parent="GameManager" instance=ExtResource("3_3o87h")]
+visible = false
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0390844, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.00342, 0)
+shape = SubResource("BoxShape3D_54hdo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_yr4c6")
+
+[node name="Players" type="Node" parent="."]
+script = ExtResource("7_yr4c6")
+
+[node name="Player" parent="Players" instance=ExtResource("8_yr4c6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 4, 0)
+
+[node name="area1" type="Area3D" parent="Players/Player"]
+
+[node name="collision1" type="CollisionShape3D" parent="Players/Player/area1"]
+shape = SubResource("CapsuleShape3D_yr4c6")
+
+[node name="player2" parent="Players" instance=ExtResource("9_uq43p")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3, 4, 0)
+
+[node name="area2" type="Area3D" parent="Players/player2"]
+
+[node name="colision1" type="CollisionShape3D" parent="Players/player2/area2"]
+shape = SubResource("CapsuleShape3D_uq43p")
+
+[connection signal="timeout" from="GameManager/GameTimer" to="GameManager" method="_on_game_timer_timeout"]

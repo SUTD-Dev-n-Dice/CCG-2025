@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd00o1dxm043m"]
+
+[ext_resource type="Script" uid="uid://dwse8gvdgypbd" path="res://Scripts/Objects/Platformer/Powers/power_speedboost.gd" id="1_bjgin"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_bjgin")

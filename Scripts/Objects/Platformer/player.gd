@@ -16,6 +16,7 @@ const gravity:int = 2400
 ## Powerup Variables
 var powerups:Array[PowerResource] = []
 var jump_mult:float = 1.0
+var speed_mult:float = 1.0
 
 ## Movement Variables
 var dir: Vector2 = Vector2.ZERO
@@ -52,7 +53,7 @@ func _physics_process(delta: float) -> void:
 			dir.x = Input.get_axis("left2", "right2")
 			jump_button = "."
 	
-	dir.x *= speed
+	dir.x *= speed*speed_mult
 	
 	if Input.is_action_pressed(jump_button) and can_move:
 		jump_buffer += delta

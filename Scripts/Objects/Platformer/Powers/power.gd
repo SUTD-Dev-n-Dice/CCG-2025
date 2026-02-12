@@ -6,7 +6,7 @@ var dir: Vector2 = Vector2(0,1)
 @export var speed:int = 200
 var time:float = 0
 
-var power:PowerResource
+@export var power:PowerResource
 
 func _ready() -> void:
 	pass

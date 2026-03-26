@@ -17,6 +17,7 @@ const gravity:int = 2400
 var powerups:Array[PowerResource] = []
 var jump_mult:float = 1.0
 var speed_mult:float = 1.0
+var shield:bool = false
 
 ## Movement Variables
 var dir: Vector2 = Vector2.ZERO
@@ -92,7 +93,11 @@ func jump(delta: float):
 		jump_buffer = 0
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	die.emit()
+	if shield:
+		dir.y= -jump_mult*4*jump_power* (max_jump_duration - jump_time/jump_duration_fading)/max_jump_duration
+		shield=false
+	else:
+		die.emit()
 
 func powerup(power:PowerResource):
 	power.effect(self)

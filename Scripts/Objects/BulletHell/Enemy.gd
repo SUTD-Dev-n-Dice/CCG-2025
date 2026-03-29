@@ -12,6 +12,20 @@ signal game_win
 var canDamage: bool = true
 var damageCooldown := 0.5   # invulnerability timing in seconds
 
+#region Sprite
+var _sprite_flash_modifier: float = 0
+var _sprite_shader: ShaderMaterial:
+	get: return $AnimatedSprite2D.material
+
+func _sprite_process_delta(delta: float):
+	_sprite_flash_modifier = move_toward(_sprite_flash_modifier, 0,
+		delta * (1 / damageCooldown))
+	_sprite_shader.set_shader_parameter("flash_modifier", _sprite_flash_modifier)
+
+func _sprite_flash():
+	_sprite_flash_modifier = 1
+#endregion
+
 @onready var game_manager = get_node("/root/BulletHell")
 var bullet = preload("res://Scenes/Objects/BulletHell/bullet.tscn")
 
@@ -36,13 +50,18 @@ func bulletDamaged() -> void:
 	emit_signal("health_changed", healthQuarts) # connected in game manager to heartsUI
 	print("[DEBUG] enemy health: ", healthQuarts)
 
+	_sprite_flash()
+
 	if healthQuarts == 0.0:
 		emit_signal("game_win")
 	
 	# start cooldown timer
 	var t = get_tree().create_timer(damageCooldown)
-	t.timeout.connect(func(): canDamage = true)
-	
+	t.timeout.connect(reset_iframe)
+
+func reset_iframe():
+	canDamage = true
+
 func set_target_position(player : String) -> void:
 	if player == "1":
 		target_position = game_manager.player1Pos
@@ -85,3 +104,6 @@ func spawn_bullet() -> void:
 		
 	_bullet.position = position
 	get_tree().current_scene.add_child(_bullet)
+
+func _physics_process(delta):
+	_sprite_process_delta(delta);
